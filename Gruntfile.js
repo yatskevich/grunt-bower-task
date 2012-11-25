@@ -23,7 +23,11 @@ module.exports = function(grunt) {
     },
 
     bower: {
-      all: {}
+      custom: {
+        options: {
+          cleanup: true
+        }
+      }
     },
 
     nodeunit: {
