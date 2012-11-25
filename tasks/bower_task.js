@@ -48,7 +48,7 @@ module.exports = function(grunt) {
           var copy = function(assets) {
             var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
               var label = 'copied';
-              if (isFile) {
+              if (!isFile) {
                 label += ' dir';
               }
               grunt.log.writeln(('[' + label + ']').green + ' ' + source + ' -> ' + destination);
