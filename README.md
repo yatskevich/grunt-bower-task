@@ -23,9 +23,7 @@ If the plugin has been installed correctly, running `grunt --help` at the comman
 [Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
 [package.json]: https://npmjs.org/doc/json.html
 
-## Grunt task for  task
-
-
+## Grunt task for Bower
 
 ### Overview
 In your project's Gruntfile, add a section named `bower` to the data object passed into `grunt.initConfig()`.
@@ -34,7 +32,7 @@ In your project's Gruntfile, add a section named `bower` to the data object pass
 grunt.initConfig({
   bower: {
     install: {
-       //just run 'grunt bower:install' and you'll see your Bower packages in lib directory
+       //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
     }
   },
 })
