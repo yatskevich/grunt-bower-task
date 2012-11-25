@@ -7,18 +7,6 @@ var EventEmitter = require('events').EventEmitter;
 
 var BowerAssets = require('../tasks/lib/bower_assets');
 
-var bowerCommands = {
-  list: new EventEmitter()
-};
-
-var bower = {
-  commands: {
-    list: function() {
-      return bowerCommands.list;
-    }
-  }
-};
-
 /*
  ======== A Handy Little Nodeunit Reference ========
  https://github.com/caolan/nodeunit
@@ -39,13 +27,14 @@ var bower = {
  test.ifError(value)
  */
 
-function setupBowerConfig(name) {
-  var assets = new BowerAssets(bower);
-  assets.cwd = path.join(__dirname, 'fixtures', name);
-  return assets;
-}
 
-function verify(name, message, expected, test) {
+function verify(name, message, expected, test, bower) {
+  function setupBowerConfig(name) {
+    var assets = new BowerAssets(bower);
+    assets.cwd = path.join(__dirname, 'fixtures', name);
+    return assets;
+  }
+
   var bowerAssets = setupBowerConfig(name);
   bowerAssets.get()
     .on('data', function(actual) {
@@ -60,36 +49,62 @@ function verify(name, message, expected, test) {
 
 exports.bower_assets = {
   setUp: function(done) {
+    var bowerCommands = {
+      list: new EventEmitter()
+    };
+    this.bowerCommands = bowerCommands;
+
+    this.bower = {
+      commands: {
+        list: function() {
+          return bowerCommands.list;
+        }
+      }
+    };
+
+    done();
+  },
+
+  tearDown: function(done) {
+    delete this.bowerCommands;
+    delete this.bower;
     done();
   },
 
   currentStateOfBower: function(test) {
     test.expect(1);
 
-    var expected = {"_any": {"jquery": "components/jquery/jquery.js"}};
+    var expected = {
+      "_any": {
+        "jquery": ["components/jquery/jquery.js"]
+      }
+    };
 
     verify(
       'current_state_of_bower',
       'should return all main paths in "_any" group',
       expected,
-      test);
+      test,
+      this.bower);
 
-    bowerCommands.list.emit('data', {"jquery": "components/jquery/jquery.js"});
+    this.bowerCommands.list.emit('data', {"jquery": "components/jquery/jquery.js"});
   },
 
   extendedComponentJson: function(test) {
     test.expect(1);
 
     var expected = {
+      "_any": {
+        "jquery": [ "components/jquery/jquery.js" ]
+      },
       "js": {
         "bootstrap-sass": [
           "components/bootstrap-sass/js/bootstrap-affix.js",
           "components/bootstrap-sass/js/bootstrap-modal.js"
-        ],
-        "jquery": "components/jquery/jquery.js"
+        ]
       },
       "scss": {
-        "bootstrap-sass": "components/bootstrap-sass/lib/_mixins.scss"
+        "bootstrap-sass": [ "components/bootstrap-sass/lib/_mixins.scss" ]
       }
     };
 
@@ -97,9 +112,10 @@ exports.bower_assets = {
       'extended_component_json',
       'should return extended set of paths in "js" and "scss" groups',
       expected,
-      test);
+      test,
+      this.bower);
 
-    bowerCommands.list.emit('data', {
+    this.bowerCommands.list.emit('data', {
       "bootstrap-sass": [
         "components/bootstrap-sass/docs/assets/js/bootstrap.js",
         "components/bootstrap-sass/docs/assets/css/bootstrap.css"

@@ -54,7 +54,7 @@ module.exports = function(grunt) {
               grunt.log.writeln(('[' + label + ']').green + ' ' + source + ' -> ' + destination);
             });
 
-            copier.once('end', success).copy();
+            copier.once('copied', success).copy();
           };
 
           var bowerAssets = new BowerAssets(bower);

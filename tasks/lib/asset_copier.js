@@ -16,38 +16,46 @@ Copier.prototype = Object.create(Emitter.prototype);
 Copier.prototype.constructor = Copier;
 
 Copier.prototype.copy = function() {
-  var anyType = this.assets['_any'];
-  if (anyType) {
-    this.copyAssets('', anyType);
+  var error;
+  _(this.assets).each(function(typedAssets, type) {
+    if (type === '_any') {
+      type = '';
+    }
+    try {
+      this.copyAssets(type, typedAssets);
+    } catch (err) {
+      error = err;
+      this.emit('error', err);
+      return false;
+    }
+  }, this);
+
+  if (!error) {
+    this.emit('copied');
   }
+
   return this;
 };
 
 Copier.prototype.copyAssets = function(type, assets) {
-  var error;
-  _(assets).each(function(source, pkg) {
-    var destination;
-    try {
+  _(assets).each(function(sources, pkg) {
+    _(sources).each(function(source) {
+      var destination;
+
       var isFile = fs.statSync(source).isFile();
+      var destinationDir = path.join(this.options.targetDir, type, pkg);
+      grunt.file.mkdir(destinationDir);
       if (isFile) {
-        destination = path.join(this.options.targetDir, type, pkg, path.basename(source));
+        destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
       } else {
-        destination = path.join(this.options.targetDir, type, pkg);
+        destination = destinationDir;
         wrench.copyDirSyncRecursive(source, destination);
       }
 
       this.report(source, destination, isFile);
-    } catch (e) {
-      this.emit('error', e);
-      error = e;
-      return false;
-    }
-  }.bind(this));
-
-  if (!error) {
-    this.emit('end');
-  }
+    }, this);
+  }, this);
 };
 
 module.exports = Copier;
