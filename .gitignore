@@ -1,5 +1,4 @@
 node_modules/
 npm-debug.log
-components/
 .idea/
 *.iml
