@@ -45,6 +45,19 @@ function setupBowerConfig(name) {
   return assets;
 }
 
+function verify(name, message, expected, test) {
+  var bowerAssets = setupBowerConfig(name);
+  bowerAssets.get()
+    .on('data', function(actual) {
+      test.deepEqual(actual, expected, message);
+      test.done();
+    })
+    .on('error', function(err) {
+      test.ok(false, err);
+      test.done();
+    });
+}
+
 exports.bower_assets = {
   setUp: function(done) {
     done();
@@ -53,20 +66,45 @@ exports.bower_assets = {
   currentStateOfBower: function(test) {
     test.expect(1);
 
-    var bowerAssets = setupBowerConfig('current_state_of_bower');
-
     var expected = {"_any": {"jquery": "components/jquery/jquery.js"}};
 
-    bowerAssets.get()
-      .on('data', function(actual) {
-        test.deepEqual(actual, expected, 'should return all main paths in "_any" group');
-        test.done();
-      })
-      .on('error', function(err) {
-        test.ok(false, err);
-        test.done();
-      });
+    verify(
+      'current_state_of_bower',
+      'should return all main paths in "_any" group',
+      expected,
+      test);
 
     bowerCommands.list.emit('data', {"jquery": "components/jquery/jquery.js"});
+  },
+
+  extendedComponentJson: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "js": {
+        "bootstrap-sass": [
+          "components/bootstrap-sass/js/bootstrap-affix.js",
+          "components/bootstrap-sass/js/bootstrap-modal.js"
+        ],
+        "jquery": "components/jquery/jquery.js"
+      },
+      "scss": {
+        "bootstrap-sass": "components/bootstrap-sass/lib/_mixins.scss"
+      }
+    };
+
+    verify(
+      'extended_component_json',
+      'should return extended set of paths in "js" and "scss" groups',
+      expected,
+      test);
+
+    bowerCommands.list.emit('data', {
+      "bootstrap-sass": [
+        "components/bootstrap-sass/docs/assets/js/bootstrap.js",
+        "components/bootstrap-sass/docs/assets/css/bootstrap.css"
+      ],
+      "jquery": "components/jquery/jquery.js"
+    });
   }
 };
