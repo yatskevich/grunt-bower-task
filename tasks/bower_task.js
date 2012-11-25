@@ -10,42 +10,35 @@
 
 module.exports = function(grunt) {
 
-  // Please see the grunt documentation for more information regarding task
-  // creation: https://github.com/gruntjs/grunt/blob/devel/docs/toc.md
+  var _ = require('lodash');
+  var bower = require('bower');
+  var BowerAssets = require('./lib/bower_assets');
 
   grunt.registerMultiTask('bower', 'Install Bower packages.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
+    var done = this.async();
+
     var options = this.options({
-      punctuation: '.',
-      separator: ', '
+      targetDir: './lib'
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(fileObj) {
-      // The source files to be concatenated. The "nonull" option is used
-      // to retain invalid files/patterns so they can be warned about.
-      var files = grunt.file.expand({nonull: true}, fileObj.src);
-
-      // Concat specified files.
-      var src = files.map(function(filepath) {
-        // Warn if a source file/pattern was invalid.
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.error('Source file "' + filepath + '" not found.');
-          return '';
-        }
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(options.separator);
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(fileObj.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + fileObj.dest + '" created.');
-    });
+    bower.commands.install()
+      .on('data', function(data){
+        grunt.log.writeln(data);
+      })
+      .on('end',function() {
+        var assets = new BowerAssets(bower);
+        var paths = assets.get();
+        copyToTargetDir(paths);
+        grunt.log.writeln("Bower packages installed successfully.");
+        done();
+      })
+      .on('error', function(error) {
+        grunt.fail.fatal(error);
+      });
   });
+
+  function copyToTargetDir(paths) {
+    grunt.fail.warn(new Error("Not implemented yet."));
+  }
 
 };
