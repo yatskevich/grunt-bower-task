@@ -23,7 +23,8 @@ module.exports = function(grunt) {
 
     var options = this.options({
       targetDir: './lib',
-      cleanup: false
+      cleanup: false,
+      install: true
     });
 
     if (options.cleanup) {
@@ -33,35 +34,36 @@ module.exports = function(grunt) {
       grunt.log.writeln(('[notice]').yellow + ' cleaning up ' + path.resolve(options.targetDir));
     }
 
-    bower.commands.install()
-      .on('data', function(data) {
-        grunt.log.writeln(data);
-      })
-      .on('end', function() {
-        var success = function() {
-          grunt.log.writeln('Bower packages installed successfully.');
-          done();
-        };
+    if (options.install) {
+      bower.commands.install()
+        .on('data', function(data) {
+          grunt.log.writeln(data);
+        })
+        .on('end', function() {
+          var success = function() {
+            grunt.log.writeln('Bower packages installed successfully.');
+            done();
+          };
 
-        var copy = function(assets) {
-          var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
-            var label = 'copied';
-            if (isFile) {
-              label += ' dir';
-            }
-            grunt.log.writeln(('[' + label + ']').green + ' ' + source + ' -> ' + destination);
-          });
+          var copy = function(assets) {
+            var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
+              var label = 'copied';
+              if (isFile) {
+                label += ' dir';
+              }
+              grunt.log.writeln(('[' + label + ']').green + ' ' + source + ' -> ' + destination);
+            });
 
-          copier.once('end', success).copy();
-        };
+            copier.once('end', success).copy();
+          };
 
-        var bowerAssets = new BowerAssets(bower);
-        bowerAssets.once('data', copy).get();
-      })
-      .on('error', function(error) {
-        grunt.fail.fatal(error);
-      });
-
+          var bowerAssets = new BowerAssets(bower);
+          bowerAssets.once('data', copy).get();
+        })
+        .on('error', function(error) {
+          grunt.fail.fatal(error);
+        });
+    }
   });
 
 };
