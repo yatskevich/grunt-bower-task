@@ -1,4 +1,4 @@
-# grunt-bower-task
+# grunt-bower-task [![Build Status](https://travis-ci.org/yatskevich/grunt-bower-task.png)](https://travis-ci.org/yatskevich/grunt-bower-task)
 
 > Install Bower packages. Smartly.
 
