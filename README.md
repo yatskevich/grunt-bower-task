@@ -70,9 +70,11 @@ Default options are good enough if you want to install Bower packages and keep o
 grunt.initConfig({
   bower: {
     install: {
-      //targetDir: './lib',
-      //cleanup: false,
-      //install: true
+      // options: { 
+      //   targetDir: './lib',
+      //   cleanup: false,
+      //   install: true
+      // }
     }
   },
 })
