@@ -2,6 +2,7 @@ var _ = require('lodash');
 var Emitter = require('events').EventEmitter;
 var path = require('path');
 var grunt = require('grunt');
+var fs = require('fs');
 
 var BowerAssets = function(bower, config) {
   this.bower = bower;
