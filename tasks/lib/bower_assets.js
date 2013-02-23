@@ -7,6 +7,12 @@ var BowerAssets = function(bower, config) {
   this.bower = bower;
   this.cwd = process.cwd();
   this.config = config || 'component.json';
+
+  if (fs.existsSync('./.bowerrc')) {
+    this.directory = JSON.parse(fs.readFileSync('./.bowerrc')).directory;
+  } else {
+    this.directory = 'components';
+  }
 };
 
 BowerAssets.prototype = Object.create(Emitter.prototype);
@@ -31,13 +37,14 @@ BowerAssets.prototype.get = function() {
 BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
   var bowerAssets = {'_any': {}};
   var cwd = this.cwd;
+  var directory = this.directory;
   _(allPaths).each(function(pkgPaths, pkg) {
     var pkgOverrides = overrides[pkg];
     if (pkgOverrides) {
       _(pkgOverrides).each(function(overriddenPaths, assetType) {
         bowerAssets[assetType] = bowerAssets[assetType] || {};
 
-        var pkgPath = path.join('components', pkg);
+        var pkgPath = path.join(directory, pkg);
         var basePath = path.join(cwd, pkgPath);
 
         bowerAssets[assetType][pkg] = _(grunt.file.expand({cwd: basePath}, overriddenPaths)).map(function(expandedPath) {
