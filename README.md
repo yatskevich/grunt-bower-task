@@ -146,6 +146,7 @@ I'm going to add options to configure target dirs for asset types, like "css" go
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
 ## Release History
+* 2013/03/18 - v0.1.1 - Updated dependencies, minor fixes.
 * 2012/11/25 - v0.1.0 - Initial release.
 
 ## License
