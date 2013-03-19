@@ -37,13 +37,20 @@ Copier.prototype.copy = function() {
   return this;
 };
 
-Copier.prototype.copyAssets = function(type, assets) {
+Copier.prototype.copyAssets = function(override, assets) {
   _(assets).each(function(sources, pkg) {
     _(sources).each(function(source) {
-      var destination;
+      var destinationDir,
+          destination;
 
       var isFile = fs.statSync(source).isFile();
-      var destinationDir = path.join(this.options.targetDir, type, pkg);
+
+      if (override) {
+        destinationDir = path.join(this.options.targetDir, override);
+      } else {
+        destinationDir = path.join(this.options.targetDir, pkg);
+      }
+
       grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
