@@ -18,9 +18,6 @@ Copier.prototype.constructor = Copier;
 Copier.prototype.copy = function() {
   var error;
   _(this.assets).each(function(typedAssets, type) {
-    if (type === '_any') {
-      type = '';
-    }
     try {
       this.copyAssets(type, typedAssets);
     } catch (err) {
@@ -43,7 +40,7 @@ Copier.prototype.copyAssets = function(type, assets) {
       var destination;
 
       var isFile = fs.statSync(source).isFile();
-      var destinationDir = path.join(this.options.targetDir, type, pkg);
+      var destinationDir = path.join(this.options.targetDir, this.options.layout(type, pkg));
       grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
