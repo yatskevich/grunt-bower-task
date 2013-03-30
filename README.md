@@ -202,6 +202,7 @@ img/bootstrap-sass/glyphicons-halflings.png
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
 ## Release History
+* 2013/03/30 - v0.2.0 - Added support for flexible assets layout, honor native Bower's configuration, reduce log output.
 * 2013/03/18 - v0.1.1 - Updated dependencies, minor fixes.
 * 2012/11/25 - v0.1.0 - Initial release.
 
