@@ -29,7 +29,7 @@ BowerAssets.prototype.get = function() {
 };
 
 BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
-  var bowerAssets = {'_any': {}};
+  var bowerAssets = {'__untyped__': {}};
   var cwd = this.cwd;
   var componentsLocation = this.bower.config.directory;
   _(allPaths).each(function(pkgPaths, pkg) {
@@ -49,7 +49,7 @@ BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
       if (!_.isArray(pkgPaths)) {
         pkgPaths = [ pkgPaths ];
       }
-      bowerAssets['_any'][pkg] = pkgPaths;
+      bowerAssets['__untyped__'][pkg] = pkgPaths;
     }
   }, this);
 

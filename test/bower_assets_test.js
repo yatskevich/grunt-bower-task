@@ -79,14 +79,14 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "_any": {
+      "__untyped__": {
         "jquery": ["components/jquery/jquery.js"]
       }
     };
 
     verify(
       'current_state_of_bower',
-      'should return all main paths in "_any" group',
+      'should return all main paths in "__untyped__" group',
       expected,
       test,
       this.bower);
@@ -98,7 +98,7 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "_any": {
+      "__untyped__": {
         "jquery": [ "components/jquery/jquery.js" ]
       },
       "js": {
@@ -132,7 +132,7 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "_any": {
+      "__untyped__": {
         "jquery": [ "bo_co/jquery/jquery.js" ]
       },
       "js": {
