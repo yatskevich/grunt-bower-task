@@ -35,7 +35,7 @@
     "colors": "~0.6.0-1"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "0.1.0",
+    "grunt-contrib-jshint": "0.3.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.6"
