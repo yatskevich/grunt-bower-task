@@ -61,6 +61,57 @@ Default value: `true`
 
 You can disable installation of Bower packages and just use this task to perform `cleanup`.
 
+#### options.layout
+Type: `string` or `function`
+Default value: `byType`
+
+There are two built-in named layouts: `byType` and `byComponent`.
+
+`byType` layout will produce the following structure:
+
+```
+lib
+|-- js
+|   |- bootstrap
+|   \- require
+|-- css
+    \- bootstrap
+```
+where `js`, `css` come from `exportsOverride` section described below.
+
+`byComponent` will group assets by type under component name:
+
+```
+lib
+|-- bootstrap
+|   |- js
+|   \- css
+|-- require
+    \- js
+```
+
+If you need to support custom layout then you can specify `layout` as a function of `type` and `component`:
+
+```js
+var path = require('path');
+
+grunt.initConfig({
+  bower: {
+    install: {
+      options: {
+        layout: function(type, component) {
+          var renamedType = type;
+          if (type == 'js') renamedType = 'javascripts';
+          else if (type == 'css') renamedType = 'stylesheets';
+
+          return path.join(component, renamedType);
+        }
+      }
+    }
+  }
+});
+```
+
 #### options.verbose
 Type: `boolean`
 Default value: `false`
@@ -80,7 +131,8 @@ grunt.initConfig({
       //   targetDir: './lib',
       //   cleanup: false,
       //   install: true,
-      //   verbose: false
+      //   verbose: false,
+      //   layout: 'byType'
       // }
     }
   },
