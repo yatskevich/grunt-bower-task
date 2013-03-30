@@ -146,9 +146,6 @@ img/bootstrap-sass/glyphicons-halflings-white.png
 img/bootstrap-sass/glyphicons-halflings.png
 ```
 
-## TODO
-I'm going to add options to configure target dirs for asset types, like "css" goes to `public/vendor/css`, "img" goes to `dist/img`.
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
