@@ -53,9 +53,10 @@ module.exports = function(grunt) {
   }
 
   function installBowerPackages(targetDirPath, options, done) {
+    var verboseLog = options.verbose ? grunt.log : grunt.verbose;
     bower.commands.install()
       .on('data', function(data) {
-        grunt.log.writeln(data);
+        verboseLog.writeln(data);
       })
       .on('end', function() {
         var success = function() {
@@ -65,8 +66,7 @@ module.exports = function(grunt) {
 
         var copy = function(assets) {
           var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
-            var log = options.verbose ? grunt.log : grunt.verbose;
-            log.writeln('Copied ' + (isFile ? '' : 'dir ') + source + ' -> ' + destination);
+            verboseLog.writeln('Copied ' + (isFile ? '' : 'dir ') + source + ' -> ' + destination);
           });
 
           copier.once('copied', success).copy();
