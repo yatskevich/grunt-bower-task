@@ -59,6 +59,10 @@ exports.bower_assets = {
         list: function() {
           return bowerCommands.list;
         }
+      },
+      config: {
+        json: 'component.json',
+        directory: 'components'
       }
     };
 
@@ -121,6 +125,41 @@ exports.bower_assets = {
         "components/bootstrap-sass/docs/assets/css/bootstrap.css"
       ],
       "jquery": "components/jquery/jquery.js"
+    });
+  },
+
+  overrideHonoringNativeBowerConfiguration: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "_any": {
+        "jquery": [ "bo_co/jquery/jquery.js" ]
+      },
+      "js": {
+        "bootstrap": [
+          "bo_co/bootstrap/js/bootstrap-affix.js"
+        ]
+      },
+      "scss": {
+        "bootstrap": [ "bo_co/bootstrap/lib/_mixins.scss" ]
+      }
+    };
+
+    this.bower.config.directory = 'bo_co';
+
+    verify(
+      'honor_bowerrc',
+      'should honor native Bower configuration while overriding packages',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('data', {
+      "bootstrap": [
+        "bo_co/bootstrap/docs/assets/js/bootstrap.js",
+        "bo_co/bootstrap/docs/assets/css/bootstrap.css"
+      ],
+      "jquery": "bo_co/jquery/jquery.js"
     });
   }
 };

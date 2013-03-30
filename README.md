@@ -79,7 +79,8 @@ grunt.initConfig({
       // options: { 
       //   targetDir: './lib',
       //   cleanup: false,
-      //   install: true
+      //   install: true,
+      //   verbose: false
       // }
     }
   },
