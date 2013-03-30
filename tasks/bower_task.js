@@ -24,14 +24,17 @@ module.exports = function(grunt) {
     var options = this.options({
       targetDir: './lib',
       cleanup: false,
-      install: true
+      install: true,
+      verbose: false
     });
+
+    var targetDirPath = path.resolve(options.targetDir);
 
     if (options.cleanup) {
       rimraf('./components');
       grunt.log.writeln(('[notice]').yellow + ' cleaning up Bower packages');
       rimraf(options.targetDir);
-      grunt.log.writeln(('[notice]').yellow + ' cleaning up ' + path.resolve(options.targetDir));
+      grunt.log.writeln(('[notice]').yellow + ' cleaning up ' + targetDirPath);
     }
 
     if (options.install) {
@@ -41,17 +44,14 @@ module.exports = function(grunt) {
         })
         .on('end', function() {
           var success = function() {
-            grunt.log.writeln('Bower packages installed successfully.');
+            grunt.log.ok('Bower packages installed successfully into ' + targetDirPath);
             done();
           };
 
           var copy = function(assets) {
             var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
-              var label = 'copied';
-              if (!isFile) {
-                label += ' dir';
-              }
-              grunt.log.writeln(('[' + label + ']').green + ' ' + source + ' -> ' + destination);
+              var log = options.verbose ? grunt.log : grunt.verbose;
+              log.writeln('Copied ' + (isFile ? '' : 'dir ') + source + ' -> ' + destination);
             });
 
             copier.once('copied', success).copy();

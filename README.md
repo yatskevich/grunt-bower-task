@@ -61,6 +61,12 @@ Default value: `true`
 
 You can disable installation of Bower packages and just use this task to perform `cleanup`.
 
+#### options.verbose
+Type: `boolean`
+Default value: `false`
+
+The task will provide more (debug) output when this option is set to `true`.
+
 ### Usage Examples
 
 #### Default Options
