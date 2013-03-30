@@ -12,11 +12,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/bower_task.js',
-        '<%= nodeunit.tests %>'
-      ],
+      all: [ 'Gruntfile.js', 'tasks/**/*.js', 'test/**/*_test.js' ],
       options: {
         jshintrc: '.jshintrc'
       }
