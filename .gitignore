@@ -4,3 +4,4 @@ npm-debug.log
 *.iml
 /components/
 /lib/
+component.json

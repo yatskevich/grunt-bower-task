@@ -19,14 +19,21 @@ module.exports = function(grunt) {
     },
 
     bower: {
-      cleanup: {
+      install: {
         options: {
-          cleanup: true,
-          install: false
+          cleanTargetDir: false,
+          cleanBowerDir: true,
+          install: true,
+          copy: true
         }
       },
-      install: {
-
+      cleanup: {
+        options: {
+          cleanTargetDir: true,
+          cleanBowerDir: true,
+          install: false,
+          copy: false
+        }
       }
     },
 
