@@ -75,6 +75,10 @@ module.exports = function(grunt) {
     log.logger = options.verbose && grunt.log;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
 
+    if (options.cleanup) {
+      options.cleanTargetDir = options.cleanBowerDir = true;
+    }
+
     if (options.cleanTargetDir) {
       add(function(callback) {
         clean(targetDir, callback);
