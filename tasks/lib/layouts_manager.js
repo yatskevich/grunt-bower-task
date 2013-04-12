@@ -26,22 +26,23 @@ module.exports = {
    * Resolves named layouts, returns functions as is
    *
    * @param {string | Function} layout name or layout function
+   * @param { Function } fail handler
    * @returns {Function} layout function
    */
-  getLayout: function(layout) {
+  getLayout: function(layout, fail) {
     if (_.isFunction(layout)) {
       return layout;
     }
 
     if (!_.isString(layout)) {
-      throw 'Layout should be specified by name or as a function';
+      fail('Layout should be specified by name or as a function');
     }
 
     if (_(defaultLayouts).has(layout)) {
       return defaultLayouts[layout];
     }
 
-    throw 'The following named layouts are supported: ' + _.keys(defaultLayouts).join(', ');
+    fail('The following named layouts are supported: ' + _.keys(defaultLayouts).join(', '));
   }
 
 };
