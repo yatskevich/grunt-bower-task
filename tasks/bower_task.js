@@ -65,8 +65,10 @@ module.exports = function(grunt) {
       }),
       add = function(name, fn) {
         tasks.push(function(callback) {
-          fn(callback);
-          grunt.log.ok('grunt-bower ' + name.cyan);
+          fn(function() {
+            grunt.log.ok(name);
+            callback();
+          });
         });
       },
       bowerDir = path.resolve(bower.config.directory),
@@ -80,23 +82,23 @@ module.exports = function(grunt) {
     }
 
     if (options.cleanTargetDir) {
-      add('clean-target-dir', function(callback) {
+      add('Cleaned target dir ' + targetDir.grey, function(callback) {
         clean(targetDir, callback);
       });
     }
 
     if (options.install) {
-      add('install', install);
+      add('Installed bower packages', install);
     }
 
     if (options.copy) {
-      add('copy', function(callback) {
+      add('Copied packages to ' + targetDir.grey, function(callback) {
         copy(options, callback);
       });
     }
 
     if (options.cleanBowerDir) {
-      add('clean-bower-dir', function(callback) {
+      add('Cleaned bower dir ' + bowerDir.grey, function(callback) {
         clean(bowerDir, callback);
       });
     }
