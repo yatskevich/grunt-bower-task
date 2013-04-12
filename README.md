@@ -49,17 +49,29 @@ Default value: `./lib`
 
 A directory where you want to keep your Bower packages.
 
+### options.install
+Type: `Boolean`
+Default value: `true`
+
+Whether you want to run bower install task itself (e.g. you might not want to do this each time on CI server)
+
+### options.cleanTargetDir
+Type: `Boolean`
+Default value: `true`
+
+Will clean target dir before running install
+
+### options.cleanBowerDir
+Type: `Boolean`
+Default value: `true`
+
+Will remove bower's dir after copy all needed files into target dir
+
 #### options.cleanup
 Type: `boolean`
 Default value: `false`
 
-If you set `cleanup: true` then every time you run `grunt bower:install` both `components` and `./lib` (specified by `options.targetDir`) will be deleted.
-
-#### options.install
-Type: `boolean`
-Default value: `true`
-
-You can disable installation of Bower packages and just use this task to perform `cleanup`.
+If true - will set cleanBowerDir & cleanTargetDir to `true` (simple shortcut)
 
 #### options.layout
 Type: `string` or `function`
@@ -116,7 +128,7 @@ grunt.initConfig({
 Type: `boolean`
 Default value: `false`
 
-The task will provide more (debug) output when this option is set to `true`.
+The task will provide more (debug) output when this option is set to `true`. You can also use `--verbose` when running task for same affect.
 
 ### Usage Examples
 
@@ -127,13 +139,14 @@ Default options are good enough if you want to install Bower packages and keep o
 grunt.initConfig({
   bower: {
     install: {
-      // options: { 
-      //   targetDir: './lib',
-      //   cleanup: false,
-      //   install: true,
-      //   verbose: false,
-      //   layout: 'byType'
-      // }
+      options: { 
+        targetDir: './lib',
+        layout: 'byType',
+        install: true,
+        verbose: false,
+        cleanTargetDir: true,
+        cleanBowerDir: false
+      }
     }
   },
 })
