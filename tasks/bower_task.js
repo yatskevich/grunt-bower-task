@@ -40,7 +40,7 @@ module.exports = function(grunt) {
   }
 
   function copy(options, callback) {
-    var bowerAssets = new BowerAssets(bower);
+    var bowerAssets = new BowerAssets(bower, options.cwd);
     bowerAssets.once('data', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
@@ -76,6 +76,7 @@ module.exports = function(grunt) {
 
     log.logger = options.verbose ? grunt.log : grunt.verbose;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
+    options.cwd = grunt.option('base') || process.cwd();
 
     if (options.cleanup) {
       options.cleanTargetDir = options.cleanBowerDir = true;
