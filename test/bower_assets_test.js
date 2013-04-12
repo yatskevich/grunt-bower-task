@@ -30,9 +30,7 @@ var BowerAssets = require('../tasks/lib/bower_assets');
 
 function verify(name, message, expected, test, bower) {
   function setupBowerConfig(name) {
-    var assets = new BowerAssets(bower);
-    assets.cwd = path.join(__dirname, 'fixtures', name);
-    return assets;
+    return new BowerAssets(bower, path.join(__dirname, 'fixtures', name));
   }
 
   var bowerAssets = setupBowerConfig(name);

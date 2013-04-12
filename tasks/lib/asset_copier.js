@@ -6,7 +6,6 @@ var grunt = require('grunt');
 var fs = require('fs');
 
 var Copier = function(assets, options, report) {
-  this.cwd = process.cwd();
   this.assets = assets;
   this.options = options;
   this.report = report;

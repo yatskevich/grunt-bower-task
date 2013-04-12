@@ -3,9 +3,9 @@ var Emitter = require('events').EventEmitter;
 var path = require('path');
 var grunt = require('grunt');
 
-var BowerAssets = function(bower) {
+var BowerAssets = function(bower, cwd) {
   this.bower = bower;
-  this.cwd = process.cwd();
+  this.cwd = cwd;
   this.config = bower.config.json;
 };
 
