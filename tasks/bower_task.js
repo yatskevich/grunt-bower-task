@@ -28,7 +28,6 @@ module.exports = function(grunt) {
   }
 
   function clean(dir, callback) {
-    log('grunt-bower ' + 'cleaning '.cyan + dir.grey);
     rimraf(dir);
     callback();
   }
