@@ -20,9 +20,7 @@ module.exports = function(grunt) {
     LayoutsManager = require('./lib/layouts_manager');
 
   function log(message) {
-    if (log.logger) {
-      log.logger.writeln(message);
-    }
+    log.logger.writeln(message);
   }
 
   function fail(error) {
@@ -63,16 +61,19 @@ module.exports = function(grunt) {
         targetDir: './lib',
         layout: 'byType',
         install: true,
-        verbose: true,
+        verbose: false,
         copy: true
       }),
-      add = function(task) {
-        tasks.push(task);
+      add = function(name, fn) {
+        tasks.push(function(callback) {
+          fn(callback);
+          grunt.log.ok('grunt-bower ' + name.cyan);
+        });
       },
       bowerDir = path.resolve(bower.config.directory),
       targetDir = path.resolve(options.targetDir);
 
-    log.logger = options.verbose && grunt.log;
+    log.logger = options.verbose ? grunt.log : grunt.verbose;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
 
     if (options.cleanup) {
@@ -80,33 +81,27 @@ module.exports = function(grunt) {
     }
 
     if (options.cleanTargetDir) {
-      add(function(callback) {
+      add('clean-target-dir', function(callback) {
         clean(targetDir, callback);
       });
     }
 
     if (options.install) {
-      add(install);
+      add('install', install);
     }
 
     if (options.copy) {
-      add(function(callback) {
+      add('copy', function(callback) {
         copy(options, callback);
       });
     }
 
     if (options.cleanBowerDir) {
-      add(function(callback) {
+      add('clean-bower-dir', function(callback) {
         clean(bowerDir, callback);
       });
     }
 
-    async.series(tasks, function(error) {
-      if (error) {
-        fail(error);
-      } else {
-        done();
-      }
-    });
+    async.series(tasks, done);
   });
 };
