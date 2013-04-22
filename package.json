@@ -1,12 +1,18 @@
 {
   "name": "grunt-bower-task",
   "description": "Install Bower packages.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/yatskevich/grunt-bower-task",
   "author": {
     "name": "Ivan Yatskevich",
     "email": "ivan@yatskevich.com"
   },
+  "contributors": [
+    {
+      "name": "Maksim Horbachevsky",
+      "url": "https://github.com/fantactuka"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/yatskevich/grunt-bower-task.git"
@@ -42,6 +48,6 @@
     "grunt-cli": "~0.1.6"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin", "bower"
   ]
 }
