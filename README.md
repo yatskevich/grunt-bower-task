@@ -53,25 +53,25 @@ A directory where you want to keep your Bower packages.
 Type: `Boolean`
 Default value: `true`
 
-Whether you want to run bower install task itself (e.g. you might not want to do this each time on CI server)
+Whether you want to run bower install task itself (e.g. you might not want to do this each time on CI server).
 
 ### options.cleanTargetDir
 Type: `Boolean`
 Default value: `true`
 
-Will clean target dir before running install
+Will clean target dir before running install.
 
 ### options.cleanBowerDir
 Type: `Boolean`
 Default value: `true`
 
-Will remove bower's dir after copy all needed files into target dir
+Will remove bower's dir after copying all needed files into target dir.
 
 #### options.cleanup
 Type: `boolean`
 Default value: `false`
 
-If true - will set cleanBowerDir & cleanTargetDir to `true` (simple shortcut)
+If true - will set `cleanBowerDir` & `cleanTargetDir` to `true` (simple shortcut).
 
 #### options.layout
 Type: `string` or `function`
@@ -128,7 +128,7 @@ grunt.initConfig({
 Type: `boolean`
 Default value: `false`
 
-The task will provide more (debug) output when this option is set to `true`. You can also use `--verbose` when running task for same affect.
+The task will provide more (debug) output when this option is set to `true`. You can also use `--verbose` when running task for same effect.
 
 ### Usage Examples
 
