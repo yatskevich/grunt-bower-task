@@ -57,21 +57,21 @@ Whether you want to run bower install task itself (e.g. you might not want to do
 
 ### options.cleanTargetDir
 Type: `Boolean`
-Default value: `true`
+Default value: `false`
 
 Will clean target dir before running install.
 
 ### options.cleanBowerDir
 Type: `Boolean`
-Default value: `true`
+Default value: `false`
 
 Will remove bower's dir after copying all needed files into target dir.
 
 #### options.cleanup
 Type: `boolean`
-Default value: `false`
+Default value: `undefined`
 
-If true - will set `cleanBowerDir` & `cleanTargetDir` to `true` (simple shortcut).
+**NOTE:** If set to true or false then both `cleanBowerDir` & `cleanTargetDir` are set to the value of `cleanup`.
 
 #### options.layout
 Type: `string` or `function`
@@ -144,7 +144,7 @@ grunt.initConfig({
         layout: 'byType',
         install: true,
         verbose: false,
-        cleanTargetDir: true,
+        cleanTargetDir: false,
         cleanBowerDir: false
       }
     }
@@ -215,6 +215,7 @@ img/bootstrap-sass/glyphicons-halflings.png
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
 ## Release History
+* 2013/04/23 - v0.2.2 - Fix backward-compatibility issue (related to `cleanup` option).
 * 2013/04/22 - v0.2.1 - Split 'install' to 'install' and 'copy' steps to support flexible workflow, add support for grunt's `--base` option.
 * 2013/03/30 - v0.2.0 - Added support for flexible assets layout, honor native Bower's configuration, reduce log output.
 * 2013/03/18 - v0.1.1 - Updated dependencies, minor fixes.

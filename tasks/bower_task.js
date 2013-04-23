@@ -56,7 +56,7 @@ module.exports = function(grunt) {
       done = this.async(),
       options = this.options({
         cleanTargetDir: false,
-        cleanBowerDir: true,
+        cleanBowerDir: false,
         targetDir: './lib',
         layout: 'byType',
         install: true,
@@ -78,8 +78,8 @@ module.exports = function(grunt) {
     options.layout = LayoutsManager.getLayout(options.layout, fail);
     options.cwd = grunt.option('base') || process.cwd();
 
-    if (options.cleanup) {
-      options.cleanTargetDir = options.cleanBowerDir = true;
+    if (options.cleanup !== undefined) {
+      options.cleanTargetDir = options.cleanBowerDir = options.cleanup;
     }
 
     if (options.cleanTargetDir) {
