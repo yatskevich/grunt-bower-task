@@ -67,6 +67,12 @@ Default value: `false`
 
 Will remove bower's dir after copying all needed files into target dir.
 
+### options.copy
+Type: `Boolean`
+Default value: `true`
+
+Copy Bower packages to target directory.
+
 #### options.cleanup
 Type: `boolean`
 Default value: `undefined`
@@ -139,7 +145,7 @@ Default options are good enough if you want to install Bower packages and keep o
 grunt.initConfig({
   bower: {
     install: {
-      options: { 
+      options: {
         targetDir: './lib',
         layout: 'byType',
         install: true,
