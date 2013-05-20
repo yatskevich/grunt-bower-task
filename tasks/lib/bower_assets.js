@@ -34,16 +34,27 @@ BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
   var componentsLocation = this.bower.config.directory;
   _(allPaths).each(function(pkgPaths, pkg) {
     var pkgOverrides = overrides[pkg];
+    delete overrides[pkg];
+
+    var createExpandedPath = function(overriddenPaths, assetType) {
+      bowerAssets[assetType] = bowerAssets[assetType] || {};
+
+      var pkgPath = path.join(componentsLocation, pkg);
+      var basePath = path.join(cwd, pkgPath);
+
+      bowerAssets[assetType][pkg] = _(grunt.file.expand({cwd: basePath}, overriddenPaths)).map(function(expandedPath) {
+        return path.join(pkgPath, expandedPath);
+      });
+    };
+
     if (pkgOverrides) {
-      _(pkgOverrides).each(function(overriddenPaths, assetType) {
-        bowerAssets[assetType] = bowerAssets[assetType] || {};
-
-        var pkgPath = path.join(componentsLocation, pkg);
-        var basePath = path.join(cwd, pkgPath);
-
-        bowerAssets[assetType][pkg] = _(grunt.file.expand({cwd: basePath}, overriddenPaths)).map(function(expandedPath) {
-          return path.join(pkgPath, expandedPath);
-        });
+      _(pkgOverrides).each(createExpandedPath);
+    } else if (!_.isEmpty(overrides)){
+      _.each(overrides, function(override, key) {
+        var reg = new RegExp(key, 'gi');
+        if (pkg.match(reg)) {
+          _(override).each(createExpandedPath);
+        }
       });
     } else {
       if (!_.isArray(pkgPaths)) {

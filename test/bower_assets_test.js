@@ -159,5 +159,44 @@ exports.bower_assets = {
       ],
       "jquery": path.normalize("bo_co/jquery/jquery.js")
     });
+  },
+
+  overrideRegexBowerConfiguration: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "__untyped__": {},
+      "js": {
+        "bootstrap": [ path.normalize("bo_co/bootstrap/js/bootstrap-affix.js") ],
+        "jquery": [
+          path.normalize("bo_co/jquery/jquery-migrate.js"),
+          path.normalize("bo_co/jquery/jquery-migrate.min.js"),
+          path.normalize("bo_co/jquery/jquery.js"),
+          path.normalize("bo_co/jquery/jquery.min.js")]
+      },
+      "scss": {
+        "bootstrap": [ path.normalize("bo_co/bootstrap/lib/_mixins.scss") ]
+      },
+      "css": {
+        "jquery": []
+      }
+    };
+
+    this.bower.config.directory = 'bo_co';
+
+    verify(
+      'regexOverridesOfBower',
+      'should match jquery using regex expression "*"',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('data', {
+      "bootstrap": [
+        path.normalize("bo_co/bootstrap/docs/assets/js/bootstrap.js"),
+        path.normalize("bo_co/bootstrap/docs/assets/css/bootstrap.css")
+      ],
+      "jquery": path.normalize("bo_co/jquery/jquery.js")
+    });
   }
 };
