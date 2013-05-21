@@ -1,0 +1,18 @@
+{
+    "name": "overrideRegexBowerConfiguration",
+    "version": "0.0.0",
+    "dependencies": {
+        "bootstrap": "2.2.1",
+        "jquery": "2.0.0"
+    },
+    "exportsOverride": {
+        "bootstrap": {
+            "js": "js/*.js",
+            "scss": "lib/*.scss"
+        },
+        ".*": {
+            "js": "**/*.js",
+            "css": "**/*.css"
+        }
+    }
+}
