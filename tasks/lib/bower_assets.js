@@ -29,12 +29,13 @@ BowerAssets.prototype.get = function() {
 };
 
 BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
+  var copyOverrides = _.clone(overrides);
   var bowerAssets = {'__untyped__': {}};
   var cwd = this.cwd;
   var componentsLocation = this.bower.config.directory;
   _(allPaths).each(function(pkgPaths, pkg) {
-    var pkgOverrides = overrides[pkg];
-    delete overrides[pkg];
+    var pkgOverrides = copyOverrides[pkg];
+    delete copyOverrides[pkg];
 
     var createExpandedPath = function(overriddenPaths, assetType) {
       bowerAssets[assetType] = bowerAssets[assetType] || {};
@@ -49,8 +50,8 @@ BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
 
     if (pkgOverrides) {
       _(pkgOverrides).each(createExpandedPath);
-    } else if (!_.isEmpty(overrides)){
-      _.each(overrides, function(override, key) {
+    } else if (!_.isEmpty(copyOverrides)){
+      _(copyOverrides).each(function(override, key) {
         var reg = new RegExp(key, 'gi');
         if (pkg.match(reg)) {
           _(override).each(createExpandedPath);
