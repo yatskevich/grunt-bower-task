@@ -217,6 +217,64 @@ img/bootstrap-sass/glyphicons-halflings-white.png
 img/bootstrap-sass/glyphicons-halflings.png
 ```
 
+And you can use regular expressions. If you don't want to specify library layouts, you would use regular expressions to be better.
+
+```json
+{
+  "name": "simple-bower",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "~1.8.3",
+    "bootstrap-sass": "*",
+    "bootstrap.css": "*",
+    "requirejs": "*"
+  },
+  "exportsOverride": {
+    "bootstrap.*": {
+      "js": "js/*.js",
+      "css": "css/*.css",
+      "scss": "lib/*.scss",
+      "img": "img/*.png"
+    },
+    "requirejs": {
+      "js": "require.js"
+    },
+    ".*": {
+      "js": "**/*.js",
+      "css": "**/*.css"
+    }
+  }
+}
+```
+
+You'll get the following files:
+
+```
+js/jquery/jquery-migrate.js
+js/jquery/jquery-migrate.min.js
+js/jquery/jquery.js
+js/jquery/jquery.min.js
+js/bootstrap-sass/bootstrap-affix.js
+js/bootstrap-sass/bootstrap-typeahead.js
+js/bootstrap.css/bootstrap.js
+js/bootstrap.css/bootstrap.min.js
+...
+js/requirejs/require.js
+scss/bootstrap-sass/_accordion.scss
+...
+scss/bootstrap-sass/_wells.scss
+scss/bootstrap-sass/bootstrap.scss
+scss/bootstrap-sass/responsive.scss
+css/bootstrap.css/bootstrap-responsive.css
+css/bootstrap.css/bootstrap-responsive.min.css
+css/bootstrap.css/bootstrap.css
+css/bootstrap.css/bootstrap.min.css
+img/bootstrap-sass/glyphicons-halflings-white.png
+img/bootstrap-sass/glyphicons-halflings.png
+img/bootstrap.css/glyphicons-halflings-white.png
+img/bootstrap.css/glyphicons-halflings.png
+```
+
 ## Contributing
 Please, use `devel` branch for all pull requests.
 
