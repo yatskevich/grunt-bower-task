@@ -53,8 +53,11 @@ BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
     } else if (!_.isEmpty(copyOverrides)){
       _(copyOverrides).each(function(override, key) {
         var reg = new RegExp(key, 'gi');
-        if (pkg.match(reg)) {
+        var matched = pkg.match(reg);
+        if (matched) {
           _(override).each(createExpandedPath);
+          // exit each loop.
+          return false;
         }
       });
     } else {
