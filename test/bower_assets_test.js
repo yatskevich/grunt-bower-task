@@ -172,13 +172,14 @@ exports.bower_assets = {
           path.normalize("bo_co/jquery/jquery-migrate.js"),
           path.normalize("bo_co/jquery/jquery-migrate.min.js"),
           path.normalize("bo_co/jquery/jquery.js"),
-          path.normalize("bo_co/jquery/jquery.min.js")]
+          path.normalize("bo_co/jquery/jquery.min.js")],
+        "underscore": [ path.normalize("bo_co/underscore/underscore.js") ]
       },
       "scss": {
         "bootstrap": [ path.normalize("bo_co/bootstrap/lib/_mixins.scss") ]
       },
       "css": {
-        "jquery": []
+        "underscore": [ path.normalize("bo_co/underscore/underscore.css") ] 
       }
     };
 
@@ -196,7 +197,11 @@ exports.bower_assets = {
         path.normalize("bo_co/bootstrap/docs/assets/js/bootstrap.js"),
         path.normalize("bo_co/bootstrap/docs/assets/css/bootstrap.css")
       ],
-      "jquery": path.normalize("bo_co/jquery/jquery.js")
+      "jquery": path.normalize("bo_co/jquery/jquery.js"),
+      "underscore": [
+        path.normalize("bo_co/underscore/underscore.js"),
+        path.normalize("bo_co/underscore/underscore.css")
+      ],
     });
   }
 };
