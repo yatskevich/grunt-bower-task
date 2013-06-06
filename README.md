@@ -217,6 +217,78 @@ img/bootstrap-sass/glyphicons-halflings-white.png
 img/bootstrap-sass/glyphicons-halflings.png
 ```
 
+And you can use wildcard and regular expressions. If you don't want to specify library layouts, you would use wildcard or regular expressions to be better.
+
+If you want to use wildcard, you need to put `*`.
+If you want to use regular expressions, you need to enclose `/` like `/bootstrap.*/`.
+
+e.g. If you define the following `bower.json`,
+
+```json
+{
+  "name": "simple-bower",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "~1.8.3",
+    "bootstrap-sass": "*",
+    "bootstrap.css": "*",
+    "requirejs": "*"
+  },
+  "exportsOverride": {
+    "/bootstrap.*/": {
+      "js": "js/*.js",
+      "css": "css/*.css",
+      "scss": "lib/*.scss",
+      "img": "img/*.png"
+    },
+    "requirejs": {
+      "js": "require.js"
+    },
+    "*": {
+      "js": "**/*.js",
+      "css": "**/*.css"
+    }
+  }
+}
+```
+
+You'll get the following files:
+
+```
+js/jquery/jquery-migrate.js
+js/jquery/jquery-migrate.min.js
+js/jquery/jquery.js
+js/jquery/jquery.min.js
+js/bootstrap-sass/bootstrap-affix.js
+js/bootstrap-sass/bootstrap-typeahead.js
+js/bootstrap.css/bootstrap.js
+js/bootstrap.css/bootstrap.min.js
+...
+js/requirejs/require.js
+scss/bootstrap-sass/_accordion.scss
+...
+scss/bootstrap-sass/_wells.scss
+scss/bootstrap-sass/bootstrap.scss
+scss/bootstrap-sass/responsive.scss
+css/bootstrap.css/bootstrap-responsive.css
+css/bootstrap.css/bootstrap-responsive.min.css
+css/bootstrap.css/bootstrap.css
+css/bootstrap.css/bootstrap.min.css
+img/bootstrap-sass/glyphicons-halflings-white.png
+img/bootstrap-sass/glyphicons-halflings.png
+img/bootstrap.css/glyphicons-halflings-white.png
+img/bootstrap.css/glyphicons-halflings.png
+```
+
+An evaluation order depends on `exportsOverride` key order in your `bower.json`.
+In above example, the eval order is as follows.
+
+- `/bootstrap.*/`
+- `requirejs`
+- `*`
+
+If you put the wildcard `*` key to the top in `exportsOverride`, every libraries are matched the wildcard and the other rules are not handled.
+
 ## Contributing
 Please, use `devel` branch for all pull requests.
 
