@@ -217,7 +217,12 @@ img/bootstrap-sass/glyphicons-halflings-white.png
 img/bootstrap-sass/glyphicons-halflings.png
 ```
 
-And you can use regular expressions. If you don't want to specify library layouts, you would use regular expressions to be better.
+And you can use wildcard and regular expressions. If you don't want to specify library layouts, you would use wildcard or regular expressions to be better.
+
+If you want to use wildcard, you need to put `*`.
+If you want to use regular expressions, you need to enclose `/` like `/bootstrap.*/`.
+
+e.g. If you define the following `bower.json`,
 
 ```json
 {
@@ -230,7 +235,7 @@ And you can use regular expressions. If you don't want to specify library layout
     "requirejs": "*"
   },
   "exportsOverride": {
-    "bootstrap.*": {
+    "/bootstrap.*/": {
       "js": "js/*.js",
       "css": "css/*.css",
       "scss": "lib/*.scss",
@@ -239,7 +244,7 @@ And you can use regular expressions. If you don't want to specify library layout
     "requirejs": {
       "js": "require.js"
     },
-    ".*": {
+    "*": {
       "js": "**/*.js",
       "css": "**/*.css"
     }
@@ -274,6 +279,15 @@ img/bootstrap-sass/glyphicons-halflings.png
 img/bootstrap.css/glyphicons-halflings-white.png
 img/bootstrap.css/glyphicons-halflings.png
 ```
+
+An evaluation order depends on `exportsOverride` key order in your `bower.json`.
+In above example, the eval order is as follows.
+
+- `/bootstrap.*/`
+- `requirejs`
+- `*`
+
+If you put the wildcard `*` key to the top in `exportsOverride`, every libraries are matched the wildcard and the other rules are not handled.
 
 ## Contributing
 Please, use `devel` branch for all pull requests.
