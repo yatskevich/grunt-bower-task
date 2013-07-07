@@ -34,7 +34,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "bower": "~0.9.2",
+    "bower": "~0.10.0",
     "lodash": "~0.10.0",
     "rimraf": "~2.0.2",
     "wrench": "~1.4.3",

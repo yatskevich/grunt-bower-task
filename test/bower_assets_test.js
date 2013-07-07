@@ -203,5 +203,30 @@ exports.bower_assets = {
         path.normalize("bo_co/underscore/underscore.css")
       ],
     });
+  },
+  
+  support_bower_components_folder: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "__untyped__": {
+        "jquery": [path.normalize("bower_components/jquery/jquery.js")]
+      }
+    };
+
+    var bower = require("bower");
+    console.log(bower.config.directory);
+    this.bower.config.directory = bower.config.directory;
+    this.bower.config.json = bower.config.json;
+    verify(
+      'support_bower_components_folder',
+      'should match "bower_components"',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('data', {
+      "jquery": path.normalize("bower_components/jquery/jquery.js"),
+    });
   }
 };
