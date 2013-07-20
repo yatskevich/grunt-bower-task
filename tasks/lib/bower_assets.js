@@ -52,18 +52,41 @@ BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
     }
   };
 
-  var addUntypedAssets = function(pkgPaths, pkg) {
-    if (!_.isArray(pkgPaths)) {
-      pkgPaths = [ pkgPaths ];
+  var initPkgAssetType = function(pkg, type) {
+    if (!bowerAssets[type]) {
+      bowerAssets[type] = {};
     }
-    bowerAssets['__untyped__'][pkg] = pkgPaths;
+    if (!bowerAssets[type][pkg]) {
+      bowerAssets[type][pkg] = [];
+    }
+  };
+
+  var addUntypedAssets = function(pkgPaths, pkg) {
+    var types = ['js', 'css'];
+    pkgPaths = [].concat(pkgPaths);
+    _(pkgPaths).each(function (pkgPath) {
+      var matched = false;
+      _(types).each(function (type) {
+        if (pkgPath.match(new RegExp('\\.' + type + '$'))) {
+          initPkgAssetType(pkg, type);
+          bowerAssets[type][pkg].push(pkgPath);
+          matched = true;
+          return false;
+        }
+      });
+      if (matched) {
+        return false;
+      }
+      initPkgAssetType(pkg, '__untyped__');
+      bowerAssets['__untyped__'][pkg].push(pkgPath);
+    });
   };
   
   _(allPaths).each(function(pkgPaths, pkg) {
     // overrides undefined.
     if (_(copyOverrides).isEmpty()) {
       addUntypedAssets(pkgPaths, pkg);
-      return false;
+      return true;
     }
 
     var found = false;
@@ -73,12 +96,15 @@ BowerAssets.prototype.mergePaths = function(allPaths, overrides) {
           bowerAssets[assetType] = bowerAssets[assetType] || {};
           var pkgPath = path.join(componentsLocation, pkg);
           var basePath = path.join(cwd, pkgPath);
-          bowerAssets[assetType][pkg] = _(grunt.file.expand({cwd: basePath}, overriddenPaths)).map(function(expandedPath) {
+          var matches = _(grunt.file.expand({cwd: basePath}, overriddenPaths)).map(function(expandedPath) {
             return path.join(pkgPath, expandedPath);
           });
+          if (matches.length > 0) {
+            bowerAssets[assetType][pkg] = matches;
+          }
         });
         found = true;
-        return false;
+        return true;
       }
     });
     if (!found) {
