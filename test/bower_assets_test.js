@@ -77,14 +77,15 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "__untyped__": {
+      "__untyped__": {},
+      "js": {
         "jquery": [path.normalize("components/jquery/jquery.js")]
       }
     };
 
     verify(
       'current_state_of_bower',
-      'should return all main paths in "__untyped__" group',
+      'should return all main paths in extension-based group',
       expected,
       test,
       this.bower);
@@ -96,10 +97,9 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "__untyped__": {
-        "jquery": [ path.normalize("components/jquery/jquery.js") ]
-      },
+      "__untyped__": {},
       "js": {
+        "jquery": [ path.normalize("components/jquery/jquery.js") ],
         "bootstrap-sass": [
           path.normalize("components/bootstrap-sass/js/bootstrap-affix.js"),
           path.normalize("components/bootstrap-sass/js/bootstrap-modal.js")
@@ -130,10 +130,9 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "__untyped__": {
-        "jquery": [ path.normalize("bo_co/jquery/jquery.js") ]
-      },
+      "__untyped__": {},
       "js": {
+        "jquery": [ path.normalize("bo_co/jquery/jquery.js") ],
         "bootstrap": [
           path.normalize("bo_co/bootstrap/js/bootstrap-affix.js")
         ]
@@ -209,7 +208,8 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "__untyped__": {
+      "__untyped__": {},
+      "js": {
         "jquery": [path.normalize("bower_components/jquery/jquery.js")]
       }
     };
