@@ -35,7 +35,7 @@ function verify(name, message, expected, test, bower) {
 
   var bowerAssets = setupBowerConfig(name);
   bowerAssets.get()
-    .on('data', function(actual) {
+    .on('end', function(actual) {
       test.deepEqual(actual, expected, message);
       test.done();
     })
@@ -89,7 +89,7 @@ exports.bower_assets = {
       test,
       this.bower);
 
-    this.bowerCommands.list.emit('data', {"jquery": path.normalize("components/jquery/jquery.js")});
+    this.bowerCommands.list.emit('end', {"jquery": path.normalize("components/jquery/jquery.js")});
   },
 
   extendedComponentJson: function(test) {
@@ -117,7 +117,7 @@ exports.bower_assets = {
       test,
       this.bower);
 
-    this.bowerCommands.list.emit('data', {
+    this.bowerCommands.list.emit('end', {
       "bootstrap-sass": [
         path.normalize("components/bootstrap-sass/docs/assets/js/bootstrap.js"),
         path.normalize("components/bootstrap-sass/docs/assets/css/bootstrap.css")
@@ -152,7 +152,7 @@ exports.bower_assets = {
       test,
       this.bower);
 
-    this.bowerCommands.list.emit('data', {
+    this.bowerCommands.list.emit('end', {
       "bootstrap": [
         path.normalize("bo_co/bootstrap/docs/assets/js/bootstrap.js"),
         path.normalize("bo_co/bootstrap/docs/assets/css/bootstrap.css")
@@ -179,7 +179,7 @@ exports.bower_assets = {
         "bootstrap": [ path.normalize("bo_co/bootstrap/lib/_mixins.scss") ]
       },
       "css": {
-        "underscore": [ path.normalize("bo_co/underscore/underscore.css") ] 
+        "underscore": [ path.normalize("bo_co/underscore/underscore.css") ]
       }
     };
 
@@ -192,7 +192,7 @@ exports.bower_assets = {
       test,
       this.bower);
 
-    this.bowerCommands.list.emit('data', {
+    this.bowerCommands.list.emit('end', {
       "bootstrap": [
         path.normalize("bo_co/bootstrap/docs/assets/js/bootstrap.js"),
         path.normalize("bo_co/bootstrap/docs/assets/css/bootstrap.css")
@@ -204,7 +204,7 @@ exports.bower_assets = {
       ],
     });
   },
-  
+
   support_bower_components_folder: function(test) {
     test.expect(1);
 
@@ -225,7 +225,7 @@ exports.bower_assets = {
       test,
       this.bower);
 
-    this.bowerCommands.list.emit('data', {
+    this.bowerCommands.list.emit('end', {
       "jquery": path.normalize("bower_components/jquery/jquery.js"),
     });
   }

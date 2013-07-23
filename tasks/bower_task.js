@@ -34,14 +34,14 @@ module.exports = function(grunt) {
 
   function install(callback) {
     bower.commands.install()
-      .on('data', log)
+      .on('log', log)
       .on('error', fail)
       .on('end', callback);
   }
 
   function copy(options, callback) {
     var bowerAssets = new BowerAssets(bower, options.cwd);
-    bowerAssets.once('data', function(assets) {
+    bowerAssets.once('end', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
       });
