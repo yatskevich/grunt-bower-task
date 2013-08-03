@@ -37,8 +37,8 @@ grunt.initConfig({
     install: {
        //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
     }
-  },
-})
+  }
+});
 ```
 
 ### Options
@@ -154,8 +154,8 @@ grunt.initConfig({
         cleanBowerDir: false
       }
     }
-  },
-})
+  }
+});
 ```
 
 #### Custom Options
