@@ -264,6 +264,7 @@ Please, use `devel` branch for all pull requests.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
 ## Release History
+* 2013/08/05 - v0.3.0 - Update to Bower 1.0.x, added wildcard/regex support, improve docs.
 * 2013/05/11 - v0.2.3 - Update to bower 0.9.x, docs improvement, Windows-compatible paths in tests.
 * 2013/04/23 - v0.2.2 - Fix backward-compatibility issue (related to `cleanup` option).
 * 2013/04/22 - v0.2.1 - Split 'install' to 'install' and 'copy' steps to support flexible workflow, add support for grunt's `--base` option.

@@ -2,7 +2,7 @@
  * grunt-bower-task
  * https://github.com/yatskevich/grunt-bower-task
  *
- * Copyright (c) 2012 Ivan Yatskevich
+ * Copyright (c) 2012-2013 Ivan Yatskevich
  * Licensed under the MIT license.
  */
 
