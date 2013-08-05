@@ -179,7 +179,7 @@ exports.bower_assets = {
         "bootstrap": [ path.normalize("bo_co/bootstrap/lib/_mixins.scss") ]
       },
       "css": {
-        "underscore": [ path.normalize("bo_co/underscore/underscore.css") ] 
+        "underscore": [ path.normalize("bo_co/underscore/underscore.css") ]
       }
     };
 
@@ -204,7 +204,7 @@ exports.bower_assets = {
       ],
     });
   },
-  
+
   support_bower_components_folder: function(test) {
     test.expect(1);
 
@@ -217,7 +217,7 @@ exports.bower_assets = {
     var bower = require("bower");
     console.log(bower.config.directory);
     this.bower.config.directory = bower.config.directory;
-    this.bower.config.json = bower.config.json;
+    this.bower.config.json = 'bower.json';
     verify(
       'support_bower_components_folder',
       'should match "bower_components"',
