@@ -139,7 +139,7 @@ The task will provide more (debug) output when this option is set to `true`. You
 ### Usage Examples
 
 #### Default Options
-Default options are good enough if you want to install Bower packages and keep only `"main"` files (as specified by package's `component.json`) in separate directory.
+Default options are good enough if you want to install Bower packages and keep only `"main"` files (as specified by package's `bower.json`) in separate directory.
 
 ```js
 grunt.initConfig({
@@ -171,7 +171,7 @@ That's why you can find such tools like [blittle/bower-installer][] which inspir
 [#46]: https://github.com/twitter/bower/issues/46
 [blittle/bower-installer]: https://github.com/blittle/bower-installer
 
-Okay, if you want more than `"main"` files in `./lib` directory then put `"exportsOverride"` section into your `component.json`:
+Okay, if you want more than `"main"` files in `./lib` directory then put `"exportsOverride"` section into your `bower.json`:
 
 ```json
 {
