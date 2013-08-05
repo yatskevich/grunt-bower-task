@@ -201,7 +201,7 @@ exports.bower_assets = {
       "underscore": [
         path.normalize("bo_co/underscore/underscore.js"),
         path.normalize("bo_co/underscore/underscore.css")
-      ],
+      ]
     });
   },
 
@@ -215,7 +215,7 @@ exports.bower_assets = {
     };
 
     var bower = require("bower");
-    console.log(bower.config.directory);
+
     this.bower.config.directory = bower.config.directory;
     this.bower.config.json = 'bower.json';
     verify(
@@ -226,7 +226,7 @@ exports.bower_assets = {
       this.bower);
 
     this.bowerCommands.list.emit('data', {
-      "jquery": path.normalize("bower_components/jquery/jquery.js"),
+      "jquery": path.normalize("bower_components/jquery/jquery.js")
     });
   }
 };
