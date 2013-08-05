@@ -217,77 +217,46 @@ img/bootstrap-sass/glyphicons-halflings-white.png
 img/bootstrap-sass/glyphicons-halflings.png
 ```
 
-And you can use wildcard and regular expressions. If you don't want to specify library layouts, you would use wildcard or regular expressions to be better.
+### Wildcard and RegExp support
 
-If you want to use wildcard, you need to put `*`.
-If you want to use regular expressions, you need to enclose `/` like `/bootstrap.*/`.
-
-e.g. If you define the following `bower.json`,
+If you have the same override rules for multiple Bower components you can make use of simple wildcard:
 
 ```json
 {
-  "name": "simple-bower",
-  "version": "0.0.0",
-  "dependencies": {
-    "jquery": "~1.8.3",
-    "bootstrap-sass": "*",
-    "bootstrap.css": "*",
-    "requirejs": "*"
-  },
+    "exportsOverride": {
+        "bootstrap-*": {        // will match 'bootstrap-modal', 'bootstrap-notify', etc.
+          "js": "**/*.js",
+          "css": "**/*.css"
+        },
+
+        "*": {                  // will match everything else
+          "js": "**/*.js",
+          "css": "**/*.css"
+        }
+    }
+}
+```
+
+You can use syntax which mirrors native JavaScript RegExp literal syntax, e.g. `/bootstrap.+/` or even `/jquery.date.v(\\d{1}).\\w{1}/`,
+if you have complex matching rules.
+
+Usage example in `bower.json`:
+
+```json
+{
   "exportsOverride": {
-    "/bootstrap.*/": {
-      "js": "js/*.js",
-      "css": "css/*.css",
-      "scss": "lib/*.scss",
-      "img": "img/*.png"
-    },
-    "requirejs": {
-      "js": "require.js"
-    },
-    "*": {
-      "js": "**/*.js",
-      "css": "**/*.css"
+    "/jquery.date.v(\\d{1}).\\w{1}/": { // will match 'jquery.date.v1.2', 'jquery_date_v1_2'
+      "js": "js/*.js"
     }
   }
 }
 ```
 
-You'll get the following files:
+#### Caveats
 
-```
-js/jquery/jquery-migrate.js
-js/jquery/jquery-migrate.min.js
-js/jquery/jquery.js
-js/jquery/jquery.min.js
-js/bootstrap-sass/bootstrap-affix.js
-js/bootstrap-sass/bootstrap-typeahead.js
-js/bootstrap.css/bootstrap.js
-js/bootstrap.css/bootstrap.min.js
-...
-js/requirejs/require.js
-scss/bootstrap-sass/_accordion.scss
-...
-scss/bootstrap-sass/_wells.scss
-scss/bootstrap-sass/bootstrap.scss
-scss/bootstrap-sass/responsive.scss
-css/bootstrap.css/bootstrap-responsive.css
-css/bootstrap.css/bootstrap-responsive.min.css
-css/bootstrap.css/bootstrap.css
-css/bootstrap.css/bootstrap.min.css
-img/bootstrap-sass/glyphicons-halflings-white.png
-img/bootstrap-sass/glyphicons-halflings.png
-img/bootstrap.css/glyphicons-halflings-white.png
-img/bootstrap.css/glyphicons-halflings.png
-```
-
-An evaluation order depends on `exportsOverride` key order in your `bower.json`.
-In above example, the eval order is as follows.
-
-- `/bootstrap.*/`
-- `requirejs`
-- `*`
-
-If you put the wildcard `*` key to the top in `exportsOverride`, every libraries are matched the wildcard and the other rules are not handled.
+- An evaluation order depends on the order of entries in `exportsOverride` section in your `bower.json`.
+- Pay attention to what characters you use in RegExp overrides - '.' and '*' has special meaning in regular expressions.
+- If you put `*` as the first entry in `exportsOverride`, it'll match everything, so other rules will be skipped.
 
 ## Contributing
 Please, use `devel` branch for all pull requests.
