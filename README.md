@@ -49,25 +49,25 @@ Default value: `./lib`
 
 A directory where you want to keep your Bower packages.
 
-### options.install
+#### options.install
 Type: `Boolean`
 Default value: `true`
 
 Whether you want to run bower install task itself (e.g. you might not want to do this each time on CI server).
 
-### options.cleanTargetDir
+#### options.cleanTargetDir
 Type: `Boolean`
 Default value: `false`
 
 Will clean target dir before running install.
 
-### options.cleanBowerDir
+#### options.cleanBowerDir
 Type: `Boolean`
 Default value: `false`
 
 Will remove bower's dir after copying all needed files into target dir.
 
-### options.copy
+#### options.copy
 Type: `Boolean`
 Default value: `true`
 
