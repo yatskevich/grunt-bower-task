@@ -59,7 +59,6 @@ exports.bower_assets = {
         }
       },
       config: {
-        json: 'component.json',
         directory: 'components'
       }
     };
@@ -217,7 +216,6 @@ exports.bower_assets = {
     var bower = require("bower");
 
     this.bower.config.directory = bower.config.directory;
-    this.bower.config.json = 'bower.json';
     verify(
       'support_bower_components_folder',
       'should match "bower_components"',
