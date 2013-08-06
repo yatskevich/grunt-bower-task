@@ -37,7 +37,7 @@ Assets.prototype.toObject = function() {
 var BowerAssets = function(bower, cwd) {
   this.bower = bower;
   this.cwd = cwd;
-  this.config = bower.config.json;
+  this.config = 'bower.json';
   this.assets = new Assets(cwd, bower.config.directory);
 };
 
