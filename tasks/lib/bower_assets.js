@@ -37,7 +37,7 @@ Assets.prototype.toObject = function() {
 var BowerAssets = function(bower, cwd) {
   this.bower = bower;
   this.cwd = cwd;
-  this.config = bower.config.json;
+  this.config = bower.config.json || 'bower.json';
   this.assets = new Assets(cwd, bower.config.directory);
 };
 
@@ -50,8 +50,8 @@ BowerAssets.prototype.get = function() {
   var exportsOverride = bowerConfig.exportsOverride;
 
   var paths = bower.commands.list({paths: true});
-  paths.on('data', function(data) {
-    this.emit('data', this.mergePaths(data, exportsOverride ? exportsOverride : {}));
+  paths.on('end', function(data) {
+    this.emit('end', this.mergePaths(data, exportsOverride ? exportsOverride : {}));
   }.bind(this));
   paths.on('error', function(err) {
     this.emit('error', err);
