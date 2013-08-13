@@ -32,8 +32,8 @@ module.exports = function(grunt) {
     callback();
   }
 
-  function install(callback) {
-    bower.commands.install()
+  function install(callback, options) {
+    bower.commands.install(null, options)
       .on('log', log)
       .on('error', fail)
       .on('end', callback);
@@ -61,7 +61,8 @@ module.exports = function(grunt) {
         layout: 'byType',
         install: true,
         verbose: false,
-        copy: true
+        copy: true,
+        production: false
       }),
       add = function(name, fn) {
         tasks.push(function(callback) {
@@ -89,7 +90,9 @@ module.exports = function(grunt) {
     }
 
     if (options.install) {
-      add('Installed bower packages', install);
+      add('Installed bower packages', function(callback) {
+        install(callback, {production: options.production});
+      });
     }
 
     if (options.copy) {

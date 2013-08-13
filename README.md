@@ -136,6 +136,12 @@ Default value: `false`
 
 The task will provide more (debug) output when this option is set to `true`. You can also use `--verbose` when running task for same effect.
 
+#### options.production
+Type: `boolean`
+Default value: `false`
+
+Will not fetch bower dev dependencies if set to `true`.
+
 ### Usage Examples
 
 #### Default Options
@@ -151,7 +157,8 @@ grunt.initConfig({
         install: true,
         verbose: false,
         cleanTargetDir: false,
-        cleanBowerDir: false
+        cleanBowerDir: false,
+        production: false
       }
     }
   }
