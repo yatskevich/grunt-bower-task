@@ -46,6 +46,7 @@ module.exports = function(grunt) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
       });
 
+      copier.once('error', fail);
       copier.once('copied', callback);
       copier.copy();
     }).get();
