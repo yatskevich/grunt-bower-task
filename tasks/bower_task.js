@@ -34,7 +34,9 @@ module.exports = function(grunt) {
 
   function install(callback) {
     bower.commands.install()
-      .on('log', log)
+      .on('log', function(result) {
+        log(result.id + ' ' + result.message);
+      })
       .on('error', fail)
       .on('end', callback);
   }
