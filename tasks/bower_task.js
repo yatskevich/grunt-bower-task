@@ -65,10 +65,10 @@ module.exports = function(grunt) {
         verbose: false,
         copy: true
       }),
-      add = function(name, fn) {
+      add = function(successMessage, fn) {
         tasks.push(function(callback) {
           fn(function() {
-            grunt.log.ok(name);
+            grunt.log.ok(successMessage);
             callback();
           });
         });
