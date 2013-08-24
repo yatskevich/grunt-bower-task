@@ -2,22 +2,22 @@ module.exports = {
 
   /**
    * @param pkg - Bower package name
-   * @param override_key - can be an exact package name, simplified wildcard or true RegExp
+   * @param overrideKey - can be an exact package name, simplified wildcard or true RegExp
    * @returns {boolean}
    */
-  matches: function(pkg, override_key) {
-    if (pkg === override_key) {
+  matches: function(pkg, overrideKey) {
+    if (pkg === overrideKey) {
       return true;
     }
 
-    if (override_key.match(/^\/.*\/$/)) {
-      var trueRegexMatcher = new RegExp(override_key.replace(/^\/|\/$/g, ''));
+    if (overrideKey.match(/^\/.*\/$/)) {
+      var trueRegexMatcher = new RegExp(overrideKey.replace(/^\/|\/$/g, ''));
       return trueRegexMatcher.test(pkg);
     }
 
-    if (override_key.indexOf('*') >= 0) {
-      override_key = override_key.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&').replace('*', '.+');
-      var wildcardMatcher = new RegExp(override_key);
+    if (overrideKey.indexOf('*') >= 0) {
+      overrideKey = overrideKey.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&').replace('*', '.+');
+      var wildcardMatcher = new RegExp(overrideKey);
       return wildcardMatcher.test(pkg);
     }
 
