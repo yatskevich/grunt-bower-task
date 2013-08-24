@@ -70,10 +70,8 @@ module.exports = function(grunt) {
       }),
       add = function(name, fn) {
         tasks.push(function(callback) {
-          fn(function() {
-            grunt.log.ok(name);
-            callback();
-          });
+          grunt.log.ok(name);
+          fn(callback);
         });
       },
       bowerDir = path.resolve(bower.config.directory),
