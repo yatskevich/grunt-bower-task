@@ -4,6 +4,6 @@ npm-debug.log
 *.iml
 /components/
 /lib/
-component.json
+bower.json
 *.swp
 *.swo
