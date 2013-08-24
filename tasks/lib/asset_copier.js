@@ -1,5 +1,4 @@
 var _ = require('lodash');
-var Emitter = require('events').EventEmitter;
 var wrench = require('wrench');
 var path = require('path');
 var grunt = require('grunt');
@@ -11,24 +10,10 @@ var Copier = function(assets, options, report) {
   this.report = report;
 };
 
-Copier.prototype = Object.create(Emitter.prototype);
-Copier.prototype.constructor = Copier;
-
 Copier.prototype.copy = function() {
-  var error;
   _(this.assets).each(function(typedAssets, type) {
-    try {
-      this.copyAssets(type, typedAssets);
-    } catch (err) {
-      error = err;
-      this.emit('error', err);
-      return false;
-    }
+    this.copyAssets(type, typedAssets);
   }, this);
-
-  if (!error) {
-    this.emit('copied');
-  }
 
   return this;
 };
