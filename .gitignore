@@ -2,7 +2,7 @@ node_modules/
 npm-debug.log
 .idea/
 *.iml
-/components/
+/bower_components/
 /lib/
 bower.json
 *.swp
