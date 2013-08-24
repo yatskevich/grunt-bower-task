@@ -71,7 +71,10 @@ module.exports = function(grunt) {
       add = function(name, fn) {
         tasks.push(function(callback) {
           grunt.log.ok(name);
-          fn(callback);
+
+          fn(function() {
+            callback();
+          });
         });
       },
       bowerDir = path.resolve(bower.config.directory),
