@@ -24,7 +24,7 @@ Assets.prototype.addOverridden = function(override, pkg) {
 
 Assets.prototype.addUntyped = function(pkgFiles, pkg) {
   if (!_.isArray(pkgFiles)) {
-    pkgFiles = [ pkgFiles ];
+    pkgFiles = pkgFiles.split(',');
   }
   this._assets['__untyped__'][pkg] = pkgFiles;
 };
