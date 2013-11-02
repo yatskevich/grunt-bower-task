@@ -74,6 +74,7 @@ module.exports = function(grunt) {
         });
       };
     options.cwd = bower.config.cwd = path.resolve(options.base || options.cwd || process.cwd());
+	bower.config.directory = options.targetDir;
     var bowerDir = path.resolve(options.cwd + '/' + bower.config.directory),
       targetDir = options.targetDir = path.resolve(options.cwd + '/' + options.targetDir);
 
