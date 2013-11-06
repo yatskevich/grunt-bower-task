@@ -49,6 +49,12 @@ Default value: `./lib`
 
 A directory where you want to keep your Bower packages.
 
+#### options.overrideBowerDirectory
+Type: `Boolean`
+Default value: `false`
+
+Override the bower directory configuration with the `targetDir`
+
 #### options.install
 Type: `Boolean`
 Default value: `true`
