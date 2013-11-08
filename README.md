@@ -136,6 +136,19 @@ Default value: `false`
 
 The task will provide more (debug) output when this option is set to `true`. You can also use `--verbose` when running task for same effect.
 
+#### options.bowerOptions
+Type: `Object`
+Default value: `{}`
+
+An options object passed through to the `bower.install` api, possible options are as follows:
+
+```
+{
+    forceLatest: true|false,    // Force latest version on conflict
+    production: true|false,     // Do not install project devDependencies
+}
+```
+
 ### Usage Examples
 
 #### Default Options
@@ -151,7 +164,8 @@ grunt.initConfig({
         install: true,
         verbose: false,
         cleanTargetDir: false,
-        cleanBowerDir: false
+        cleanBowerDir: false,
+        bowerOptions: {}
       }
     }
   }
