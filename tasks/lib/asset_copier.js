@@ -4,6 +4,7 @@ var wrench = require('wrench');
 var path = require('path');
 var grunt = require('grunt');
 var fs = require('fs');
+var glob = require("glob");
 
 var Copier = function(assets, options, report) {
   this.assets = assets;
@@ -34,24 +35,27 @@ Copier.prototype.copy = function() {
 };
 
 Copier.prototype.copyAssets = function(type, assets) {
+  var self = this;
   _(assets).each(function(sources, pkg) {
     _(sources).each(function(source) {
       var destination;
-
-      var isFile = fs.statSync(source).isFile();
-      var destinationDir = path.join(this.options.targetDir, this.options.layout(type, pkg));
-      grunt.file.mkdir(destinationDir);
-      if (isFile) {
-        destination = path.join(destinationDir, path.basename(source));
-        grunt.file.copy(source, destination);
-      } else {
-        destination = destinationDir;
-        wrench.copyDirSyncRecursive(source, destination);
-      }
-
-      this.report(source, destination, isFile);
-    }, this);
-  }, this);
+      glob(source, function (er, globFiles) {
+        _(globFiles).each(function(file) {
+          var isFile = fs.statSync(file).isFile();
+          var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg));
+          grunt.file.mkdir(destinationDir);
+          if (isFile) {
+            destination = path.join(destinationDir, path.basename(file));
+            grunt.file.copy(file, destination);
+          } else {
+            destination = destinationDir;
+            wrench.copyDirSyncRecursive(file, destination);
+          }
+          self.report(file, destination, isFile);
+        });
+      });
+    });
+  });
 };
 
 module.exports = Copier;
