@@ -165,7 +165,6 @@ exports.bower_assets = {
     test.expect(1);
 
     var expected = {
-      "__untyped__": {},
       "js": {
         "bootstrap": [ path.normalize("bo_co/bootstrap/js/bootstrap-affix.js") ],
         "jquery": [
@@ -226,7 +225,7 @@ exports.bower_assets = {
       this.bower);
 
     this.bowerCommands.list.emit('end', {
-      "jquery": path.normalize("bower_components/jquery/jquery.js"),
+      "jquery": path.normalize("bower_components/jquery/jquery.js")
     });
   }
 };
