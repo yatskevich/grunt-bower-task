@@ -39,8 +39,7 @@
     "rimraf": "~2.0.2",
     "wrench": "~1.4.3",
     "colors": "~0.6.0-1",
-    "async": "~0.1.22",
-    "glob": "~3.2.6"
+    "async": "~0.1.22"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
