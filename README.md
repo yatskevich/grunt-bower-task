@@ -278,8 +278,9 @@ Please, use `devel` branch for all pull requests.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
 ## Release History
-* 2013/11/08 - v0.3.3 - Added `bowerOptions` (thanks to @xzyfer), fixed paths handling using `glob` module (thanks to @leon) 
-* 2013/09/08 - v0.3.2 - Update to Bower 1.2.x, fixed logging issue
+* 2013/11/10 - v0.3.4 - Fix paths handling of glob patterns in components' "main" files.
+* 2013/11/08 - v0.3.3 - Added `bowerOptions` (thanks to @xzyfer), fixed paths handling using `glob` module (thanks to @leon).
+* 2013/09/08 - v0.3.2 - Update to Bower 1.2.x, fixed logging issue.
 * 2013/08/09 - v0.3.1 - Update to Bower 1.1.x, fixed compatibility issue with new Bower's API.
 * 2013/08/05 - v0.3.0 - Update to Bower 1.0.x, added wildcard/regex support, improve docs.
 * 2013/05/11 - v0.2.3 - Update to bower 0.9.x, docs improvement, Windows-compatible paths in tests.
