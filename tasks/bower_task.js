@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         cleanTargetDir: false,
         cleanBowerDir: false,
         targetDir: './lib',
-		overrideBowerDirectory : false,
+				overrideBowerDirectory : false,
         layout: 'byType',
         install: true,
         verbose: false,
@@ -74,14 +74,14 @@ module.exports = function(grunt) {
           });
         });
       };
-	  
-	if(options.overrideBoweDirectory){
-		bower.config.directory = options.targetDir;
-	}
+    
+    if(options.overrideBoweDirectory){
+      bower.config.directory = options.targetDir;
+    }
 	
     options.cwd = bower.config.cwd = path.resolve(options.base || options.cwd || process.cwd());
-    var bowerDir = path.resolve(options.cwd + '/' + bower.config.directory),
-      targetDir = options.targetDir = path.resolve(options.cwd + '/' + options.targetDir);
+    var bowerDir = path.resolve(options.cwd + '/' + bower.config.directory);
+    var targetDir = options.targetDir = path.resolve(options.cwd + '/' + options.targetDir);
 
     log.logger = options.verbose ? grunt.log : grunt.verbose;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
