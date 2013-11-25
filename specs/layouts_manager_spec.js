@@ -21,6 +21,20 @@ describe('Layout Manager', function() {
       expect(byComponentLayout).to.exist;
       expect(byComponentLayout('sass', 'bourbone')).to.equal(path.normalize('bourbone/sass'));
     });
+
+    it('should support "byTypeKeepStructure" layout', function() {
+      var byTypeKeepStructure = layoutsManager.getLayout('byTypeKeepStructure');
+
+      expect(byTypeKeepStructure).to.exist;
+      expect(byTypeKeepStructure('styles', 'foundation', 'scss/foundation/components')).to.equal(path.normalize('styles/foundation/scss/foundation/components'));
+    });
+
+    it('should support "byComponentKeepStructure" layout', function() {
+      var byComponentKeepStructure = layoutsManager.getLayout('byComponentKeepStructure');
+
+      expect(byComponentKeepStructure).to.exist;
+      expect(byComponentKeepStructure('styles', 'foundation', 'scss/foundation/components')).to.equal(path.normalize('foundation/styles/scss/foundation/components'));
+    });
   });
 
   it('should support custom layouts as functions', function() {
@@ -31,4 +45,15 @@ describe('Layout Manager', function() {
     expect(customLayout).to.be.a('function');
     expect(customLayout('img', 'logo.png')).to.equal('imglogo.png');
   });
+
+  it('should support keeping structure in custom layouts as functions', function() {
+    var customLayout = layoutsManager.getLayout(function(type, pkg, sourceDir) {
+      return path.join(type, pkg, sourceDir);
+    });
+
+    expect(customLayout).to.be.a('function');
+    expect(customLayout('styles', 'bootstrap', 'less')).to.equal('styles/bootstrap/less');
+  });
+
+
 });
