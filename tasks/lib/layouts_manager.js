@@ -2,11 +2,11 @@ var _ = require('lodash');
 var path = require('path');
 
 var handleUntyped = function(layout) {
-  return function(type, pkg) {
+  return function(type, pkg, sourceDir) {
     if (type === '__untyped__') {
       return pkg;
     }
-    return layout(type, pkg);
+    return layout(type, pkg, sourceDir);
   };
 };
 
@@ -17,6 +17,14 @@ var defaultLayouts = {
 
   byComponent: handleUntyped(function(type, pkg) {
     return path.join(pkg, type);
+  }),
+
+  byTypeKeepStructure: handleUntyped(function(type, pkg, sourceDir) {
+    return path.join(type, pkg, sourceDir);
+  }),
+
+  byComponentKeepStructure: handleUntyped(function(type, pkg, sourceDir) {
+    return path.join(pkg, type, sourceDir);
   })
 };
 
