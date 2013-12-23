@@ -172,6 +172,18 @@ grunt.initConfig({
 });
 ```
 
+#### options.bowerConfig
+Type: `Object`
+Default value: `{}`
+
+A config object passed through to the `bower.install` api, possible options are as follows:
+
+```
+{
+    offline: true|false,    // allow install from cache without online validation check
+}
+```
+
 #### Custom Options
 In this initial version there are no more options in plugin itself. **BUT!**
 
