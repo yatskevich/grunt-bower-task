@@ -149,6 +149,18 @@ An options object passed through to the `bower.install` api, possible options ar
 }
 ```
 
+#### options.bowerConfig
+Type: `Object`
+Default value: `{}`
+
+Additional CLI options that are typically avaibable to all bower commands (not just install). The object is passed through to the `bower.install` api. Possible options are as follows:
+
+```
+{
+    offline: true|false,    // allow install from cache without online validation check
+}
+```
+
 ### Usage Examples
 
 #### Default Options
@@ -170,18 +182,6 @@ grunt.initConfig({
     }
   }
 });
-```
-
-#### options.bowerConfig
-Type: `Object`
-Default value: `{}`
-
-A config object passed through to the `bower.install` api, possible options are as follows:
-
-```
-{
-    offline: true|false,    // allow install from cache without online validation check
-}
 ```
 
 #### Custom Options
