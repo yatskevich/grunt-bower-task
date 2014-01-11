@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         });
       };
     
-    if(options.overrideBoweDirectory){
+    if(options.overrideBowerDirectory){
       bower.config.directory = options.targetDir;
     }
 	
