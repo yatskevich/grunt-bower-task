@@ -38,17 +38,30 @@ Copier.prototype.copyAssets = function(type, assets) {
   _(assets).each(function(sources, pkg) {
     _(sources).each(function(source) {
       var destination;
+      var copyFunction;
 
       var isFile = fs.statSync(source).isFile();
       var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg));
       grunt.file.mkdir(destinationDir);
+
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
-        grunt.file.copy(source, destination);
+        copyFunction = function() { grunt.file.copy(source, destination); };
       } else {
         destination = destinationDir;
-        wrench.copyDirSyncRecursive(source, destination);
+        copyFunction = function() { wrench.copyDirSyncRecursive(source, destination); };
       }
+
+      var notification = {
+        type: (isFile? 'file' : 'directory'),
+        destination: destination,
+        source: source
+      };
+
+      self.emit('before-copy', notification);
+      copyFunction();
+      self.emit('after-copy', notification);
+
       self.report(source, destination, isFile);
     });
   });

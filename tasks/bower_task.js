@@ -48,6 +48,12 @@ module.exports = function(grunt) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
       });
 
+      if(options.beforeCopy) {
+        copier.on('before-copy', options.beforeCopy);
+      }
+      if(options.afterCopy) {
+        copier.on('after-copy', options.afterCopy);
+      }
       copier.once('copied', callback);
       copier.copy();
     }).get();
