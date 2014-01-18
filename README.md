@@ -55,6 +55,12 @@ Default value: `true`
 
 Whether you want to run bower install task itself (e.g. you might not want to do this each time on CI server).
 
+#### options.prune
+Type: `Boolean`
+Default value: `true`
+
+Whether you want to run bower prune task itself (e.g. you might not want to do this each time on CI server).
+
 #### options.cleanTargetDir
 Type: `Boolean`
 Default value: `false`
