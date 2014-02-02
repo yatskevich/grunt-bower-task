@@ -15,6 +15,8 @@ module.exports = function(grunt) {
     async = require('async'),
     colors = require('colors'),
     rimraf = require('rimraf').sync,
+    fs = require('fs'),
+    _ = require('lodash'),
     BowerAssets = require('./lib/bower_assets'),
     AssetCopier = require('./lib/asset_copier'),
     LayoutsManager = require('./lib/layouts_manager');
@@ -41,15 +43,47 @@ module.exports = function(grunt) {
       .on('end', callback);
   }
 
+  function updateConfig(options, requirePaths) {
+      var configFile;
+      var configPath = path.resolve(options.updateRequireJsConfig);
+
+      if (fs.existsSync(configPath)) {
+        configFile = fs.readFileSync(String(configPath), 'utf8');
+      } else {
+        configFile = fs.readFileSync(path.join(__dirname, '../templates/config.js'), 'utf8');
+      }
+      var requirejs = require('requirejs/bin/r.js');
+      var rjsConfig;
+      requirejs.tools.useLib(function (require) {
+          rjsConfig = require('transform').modifyConfig(configFile, function (config) { 
+            if (config.paths) {
+               _.extend(config.paths, requirePaths);
+            } else {
+               config.paths = requirePaths;
+            }
+            return config;
+            })
+          fs.writeFileSync(configPath, rjsConfig, 'utf-8');
+          grunt.log.ok('Updated RequireJS config ' + configPath.grey + ' with installed Bower components');
+      });
+
+  }
+
   function copy(options, callback) {
+    var requirePaths = {}
     var bowerAssets = new BowerAssets(bower, options.cwd);
     bowerAssets.on('end', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
+      }, function(pkg,destfile) {
+        requirePaths[pkg] = destfile.replace(/(.*)\.js$/,'$1') ;
       });
 
       copier.once('copied', callback);
       copier.copy();
+      if(options.updateRequireJsConfig) {
+          updateConfig( options, requirePaths );
+          }
     }).get();
   }
 
@@ -64,6 +98,7 @@ module.exports = function(grunt) {
         install: true,
         verbose: false,
         copy: true,
+        updateRequireJsConfig: false,
         bowerOptions: {}
       }),
       add = function(successMessage, fn) {
