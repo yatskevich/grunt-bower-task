@@ -47,7 +47,10 @@ Copier.prototype.copyAssets = function(type, assets) {
         grunt.file.copy(source, destination);
       } else {
         destination = destinationDir;
-        wrench.copyDirSyncRecursive(source, destination);
+        wrench.copyDirSyncRecursive(source, destination, {
+          inflateSymlinks: true,
+          forceDelete: true
+        });
       }
       self.report(source, destination, isFile);
     });
