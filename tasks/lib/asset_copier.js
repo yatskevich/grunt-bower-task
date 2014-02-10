@@ -49,7 +49,8 @@ Copier.prototype.copyAssets = function(type, assets) {
         destination = destinationDir;
         wrench.copyDirSyncRecursive(source, destination, {
           inflateSymlinks: true,
-          forceDelete: true
+          forceDelete: true,
+          filter: self.options.filter || null
         });
       }
       self.report(source, destination, isFile);
