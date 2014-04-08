@@ -1,6 +1,6 @@
 /*
- * grunt-bower-task
- * https://github.com/yatskevich/grunt-bower-task
+ * grunt-bower-installer
+ * https://github.com/AndrewDryga/grunt-bower-installer
  *
  * Copyright (c) 2012 Ivan Yatskevich
  * Licensed under the MIT license.
@@ -75,11 +75,11 @@ module.exports = function(grunt) {
           });
         });
       };
-    
+
     if(options.overrideBowerDirectory){
       bower.config.directory = options.targetDir;
     }
-	
+
     options.cwd = bower.config.cwd = path.resolve(options.base || options.cwd || process.cwd());
     var bowerDir = path.resolve(options.cwd + '/' + bower.config.directory);
     var targetDir = options.targetDir = path.resolve(options.cwd + '/' + options.targetDir);
