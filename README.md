@@ -1,4 +1,4 @@
-# grunt-bower-installer [![Build Status](https://travis-ci.org/yatskevich/grunt-bower-installer.png)](https://travis-ci.org/yatskevich/grunt-bower-installer)
+# grunt-bower-installer [![Build Status](https://travis-ci.org/AndrewDryga/grunt-bower-installer.svg?branch=master)](https://travis-ci.org/AndrewDryga/grunt-bower-installer)
 
 > Install Bower packages. Smartly.
 
