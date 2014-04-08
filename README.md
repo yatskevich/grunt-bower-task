@@ -73,6 +73,12 @@ Default value: `false`
 
 Will remove bower's dir after copying all needed files into target dir.
 
+#### options.filter
+Type: `regexp` or `function`
+Default value: `null`
+
+A filter to match files against when copying. Returning true or matching doesn't copy the file.
+
 #### options.copy
 Type: `Boolean`
 Default value: `true`
