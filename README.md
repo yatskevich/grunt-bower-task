@@ -1,4 +1,4 @@
-# grunt-bower-task [![Build Status](https://travis-ci.org/yatskevich/grunt-bower-task.png)](https://travis-ci.org/yatskevich/grunt-bower-task)
+# grunt-bower-installer [![Build Status](https://travis-ci.org/yatskevich/grunt-bower-installer.png)](https://travis-ci.org/yatskevich/grunt-bower-installer)
 
 > Install Bower packages. Smartly.
 
@@ -10,13 +10,13 @@ Please note, this plugin works **only with grunt 0.4+**. If you are using grunt 
 From the same directory as your project's [Gruntfile][Getting Started] and [package.json][], install this plugin with the following command:
 
 ```bash
-npm install grunt-bower-task --save-dev
+npm install grunt-bower-installer --save-dev
 ```
 
 Once that's done, add this line to your project's Gruntfile:
 
 ```js
-grunt.loadNpmTasks('grunt-bower-task');
+grunt.loadNpmTasks('grunt-bower-installer');
 ```
 
 If the plugin has been installed correctly, running `grunt --help` at the command line should list the newly-installed plugin's task or tasks. In addition, the plugin should be listed in package.json as a `devDependency`, which ensures that it will be installed whenever the `npm install` command is run.
@@ -220,7 +220,7 @@ Okay, if you want more than `"main"` files in `./lib` directory then put `"expor
   }
 }
 ```
-`grunt-bower-task` will do the rest:
+`grunt-bower-installer` will do the rest:
 
 * If Bower package has defined `"main"` files then they will be copied to `./lib/<package>/`.
 * If `"main"` files are empty then the whole package directory will be copied to `./lib`.
@@ -307,4 +307,4 @@ Copyright (c) 2012-2013 Ivan Yatskevich
 
 Licensed under the MIT license.
 
-<https://github.com/yatskevich/grunt-bower-task/blob/master/LICENSE-MIT>
+<https://github.com/yatskevich/grunt-bower-installer/blob/master/LICENSE-MIT>
