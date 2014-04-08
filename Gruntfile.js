@@ -1,6 +1,6 @@
 /*
- * grunt-bower-task
- * https://github.com/yatskevich/grunt-bower-task
+ * grunt-bower-installer
+ * https://github.com/AndrewDryga/grunt-bower-installer
  *
  * Copyright (c) 2012-2013 Ivan Yatskevich
  * Licensed under the MIT license.
