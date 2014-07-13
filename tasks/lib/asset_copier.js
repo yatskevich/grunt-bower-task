@@ -46,7 +46,7 @@ Copier.prototype.copyAssets = function(type, assets) {
         destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
       } else {
-        destination = destinationDir;
+        destination = path.join(destinationDir, path.basename(source));
         wrench.copyDirSyncRecursive(source, destination);
       }
       self.report(source, destination, isFile);
