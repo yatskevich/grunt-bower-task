@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
 
-  var bower = require('bower'),
+  var ownBower = require('bower'),
     path = require('path'),
     async = require('async'),
     colors = require('colors'),
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     callback();
   }
 
-  function install(options, callback) {
+  function install(bower, options, callback) {
     bower.commands.install([], options.bowerOptions)
       .on('log', function(result) {
         log(['bower', result.id.cyan, result.message].join(' '));
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
       .on('end', callback);
   }
 
-  function copy(options, callback) {
+  function copy(bower, options, callback) {
     var bowerAssets = new BowerAssets(bower, options.cwd);
     bowerAssets.on('end', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
@@ -64,7 +64,8 @@ module.exports = function(grunt) {
         install: true,
         verbose: false,
         copy: true,
-        bowerOptions: {}
+        bowerOptions: {},
+        bower: ownBower
       }),
       add = function(successMessage, fn) {
         tasks.push(function(callback) {
@@ -93,13 +94,13 @@ module.exports = function(grunt) {
 
     if (options.install) {
       add('Installed bower packages', function(callback) {
-        install(options, callback);
+        install(options.bower, options, callback);
       });
     }
 
     if (options.copy) {
       add('Copied packages to ' + targetDir.grey, function(callback) {
-        copy(options, callback);
+        copy(options.bower, options, callback);
       });
     }
 
