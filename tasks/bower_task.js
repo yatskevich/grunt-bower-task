@@ -75,7 +75,7 @@ module.exports = function(grunt) {
           });
         });
       },
-      bowerDir = path.resolve(bower.config.directory),
+      bowerDir = path.resolve(options.bower.config.directory),
       targetDir = path.resolve(options.targetDir);
 
     log.logger = options.verbose ? grunt.log : grunt.verbose;
