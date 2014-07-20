@@ -1,7 +1,7 @@
 {
   "name": "grunt-bower-task",
   "description": "Install Bower packages.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "homepage": "https://github.com/yatskevich/grunt-bower-task",
   "author": {
     "name": "Ivan Yatskevich",
@@ -28,7 +28,7 @@
   ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "scripts": {
     "test": "grunt test"

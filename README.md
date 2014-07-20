@@ -108,7 +108,7 @@ lib
     \- js
 ```
 
-If you need to support custom layout then you can specify `layout` as a function of `type` and `component`:
+If you need to support custom layout then you can specify `layout` as a function of `type`, `component` and `source`:
 
 ```js
 var path = require('path');
@@ -117,7 +117,7 @@ grunt.initConfig({
   bower: {
     install: {
       options: {
-        layout: function(type, component) {
+        layout: function(type, component, source) {
           var renamedType = type;
           if (type == 'js') renamedType = 'javascripts';
           else if (type == 'css') renamedType = 'stylesheets';
@@ -129,6 +129,11 @@ grunt.initConfig({
   }
 });
 ```
+
+You can use `source` parameter value in order to produce more flexible layout based on the resource file name.
+Take a look at [PR #114][] as an example.
+
+[PR #114]: https://github.com/yatskevich/grunt-bower-task/pull/114
 
 #### options.verbose
 Type: `boolean`
@@ -278,6 +283,7 @@ Please, use `devel` branch for all pull requests.
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
 
 ## Release History
+* 2014/07/20 - v0.4.0 - Update to Bower 1.3.x and Node to 0.10 (thanks, @johnkchiu), speed up task loading (thanks, @c089), flexible layouts (thanks, @grawk)
 * 2013/11/10 - v0.3.4 - Fix paths handling of glob patterns in components' "main" files.
 * 2013/11/08 - v0.3.3 - Added `bowerOptions` (thanks to @xzyfer), fixed paths handling using `glob` module (thanks to @leon).
 * 2013/09/08 - v0.3.2 - Update to Bower 1.2.x, fixed logging issue.
