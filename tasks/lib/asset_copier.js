@@ -40,7 +40,7 @@ Copier.prototype.copyAssets = function(type, assets) {
       var destination;
 
       var isFile = fs.statSync(source).isFile();
-      var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg));
+      var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg, source));
       grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
