@@ -87,8 +87,8 @@ module.exports = function(grunt) {
           });
         });
       },
-      workingDirectory = grunt.option('base') || process.cwd();;
-
+      workingDirectory = grunt.option('base') || process.cwd();
+      
     // calling require on the dependencies has been delayed to prevent slow
     // dependencies delaying the startup of grunt even if this task is not used
     // at all
