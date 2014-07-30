@@ -44,6 +44,7 @@ module.exports = function(grunt) {
   }
 
   function install(options, callback) {
+    bower.config.cwd = options.cwd;
     bower.commands.install([], options.bowerOptions)
       .on('log', function(result) {
         log(['bower', result.id.cyan, result.message].join(' '));
@@ -53,6 +54,7 @@ module.exports = function(grunt) {
   }
 
   function copy(options, callback) {
+    grunt.file.setBase(options.cwd);
     var bowerAssets = new BowerAssets(bower, options.cwd);
     bowerAssets.on('end', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
@@ -84,49 +86,58 @@ module.exports = function(grunt) {
             callback();
           });
         });
-      },
-      bowerDir,
-      targetDir;
+      };
 
     // calling require on the dependencies has been delayed to prevent slow
     // dependencies delaying the startup of grunt even if this task is not used
     // at all
     requireDependencies();
-
-    bowerDir = path.resolve(bower.config.directory);
-    targetDir = path.resolve(options.targetDir);
-
-    log.logger = options.verbose ? grunt.log : grunt.verbose;
-    options.layout = LayoutsManager.getLayout(options.layout, fail);
-    options.cwd = grunt.option('base') || process.cwd();
-
-    if (options.cleanup !== undefined) {
-      options.cleanTargetDir = options.cleanBowerDir = options.cleanup;
+    
+    if (this.files.length === 0) {
+      this.files = grunt.file.expandMapping('bower.json', '', options);
     }
+    
+    this.files.forEach(function(file) {
+      file.src.forEach(function(pathToFile) {
+        if (grunt.file.isFile(pathToFile)) {
+          var eachOptions = grunt.util._.merge({}, options);
+          var bowerDir = path.resolve(pathToFile, '..', bower.config.directory);
+          var targetDir = path.resolve(pathToFile, '..', eachOptions.targetDir);
 
-    if (options.cleanTargetDir) {
-      add('Cleaned target dir ' + targetDir.grey, function(callback) {
-        clean(targetDir, callback);
+          log.logger = eachOptions.verbose ? grunt.log : grunt.verbose;
+          eachOptions.layout = LayoutsManager.getLayout(eachOptions.layout, fail);
+          eachOptions.cwd = grunt.option('base') || targetDir;
+
+          if (eachOptions.cleanup !== undefined) {
+            eachOptions.cleanTargetDir = eachOptions.cleanBowerDir = eachOptions.cleanup;
+          }
+
+          if (eachOptions.cleanTargetDir) {
+            add('Cleaned target dir ' + targetDir.grey, function(callback) {
+              clean(targetDir, callback);
+            });
+          }
+
+          if (eachOptions.install) {
+            add('Installed bower packages', function(callback) {
+              install(eachOptions, callback);
+            });
+          }
+
+          if (eachOptions.copy) {
+            add('Copied packages to ' + targetDir.grey, function(callback) {
+              copy(eachOptions, callback);
+            });
+          }
+
+          if (eachOptions.cleanBowerDir) {
+            add('Cleaned bower dir ' + bowerDir.grey, function(callback) {
+                clean(bowerDir, callback);
+            });
+          }
+        }
       });
-    }
-
-    if (options.install) {
-      add('Installed bower packages', function(callback) {
-        install(options, callback);
-      });
-    }
-
-    if (options.copy) {
-      add('Copied packages to ' + targetDir.grey, function(callback) {
-        copy(options, callback);
-      });
-    }
-
-    if (options.cleanBowerDir) {
-      add('Cleaned bower dir ' + bowerDir.grey, function(callback) {
-        clean(bowerDir, callback);
-      });
-    }
+    });
 
     async.series(tasks, done);
   });
