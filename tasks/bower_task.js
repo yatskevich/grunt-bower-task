@@ -86,7 +86,8 @@ module.exports = function(grunt) {
             callback();
           });
         });
-      };
+      },
+      workingDirectory = grunt.option('base') || process.cwd();;
 
     // calling require on the dependencies has been delayed to prevent slow
     // dependencies delaying the startup of grunt even if this task is not used
@@ -137,6 +138,11 @@ module.exports = function(grunt) {
           }
         }
       });
+    });
+    
+    add('Return working directory', function(callback) {
+      grunt.file.setBase(workingDirectory);
+      callback();
     });
 
     async.series(tasks, done);
