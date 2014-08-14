@@ -73,6 +73,12 @@ Default value: `true`
 
 Copy Bower packages to target directory.
 
+#### options.newerOnly
+Type: `Boolean`
+Default value: `false`
+
+Only copy files that are newer.
+
 #### options.cleanup
 Type: `boolean`
 Default value: `undefined`
