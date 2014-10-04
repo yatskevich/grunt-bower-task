@@ -1,0 +1,15 @@
+{
+  "name": "simple-bower",
+  "version": "0.0.0",
+  "dependencies": {
+      "jquery": "~1.7.2"
+  },
+  "exportsOverride": {
+    "packageName": "{{meta.name}}-{{version.major}}.{{version.minor}}.{{version.revision}}",
+    "overrides": {
+      "jquery": {
+        "js": "*.js"
+      }
+    }
+  }
+}

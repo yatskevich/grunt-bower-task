@@ -236,6 +236,47 @@ img/bootstrap-sass/glyphicons-halflings-white.png
 img/bootstrap-sass/glyphicons-halflings.png
 ```
 
+### Advanced usage with package renaming
+You can also use an extended `"exportsOverride"` definition that allows you to further customize
+package name(s) and thus resulting target folder names:
+
+```json
+{
+  "name": "simple-bower",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap-sass-official": "*",
+    "requirejs": "*"
+  },
+  "exportsOverride": {
+    "packageName": "{{meta.name}}-{{version.major}}.{{version.minor}}.{{version.revision}}",
+    "overrides": {
+      "bootstrap-sass-official": {
+        "packageName": "bootstrap-{{version_safe}}",
+        "overrides": {
+          "js": "assets/javascripts/*.js"
+        }
+      },
+      "requirejs": {
+        "js": "require.js"
+      },
+	  "jquery": {
+	    "js": "dist/*.js"
+	  }
+    }
+  }
+}
+```
+In order to use it you must provide `packageName` property that will be evaluated with [Handlebars](http://handlebarsjs.com/) templating engine and enclose overrides in `overrides` object. `exportsOverride.packageName` provides the default naming convention and can be redefined for a specific package (see override for "bootstrap-sass-oficial" package).
+
+In `packageName` you can refer to:
+* `meta` - metadata information as given by "bower info \<package\>" (`name`, `version`, etc.)
+* `version` - provides `major`, `minor` and `revision` properties
+* `version_safe` - metatdata's version with all non-dot and non-digit characters replaced with "\_" (i.e. "3.2.0+2" becomes "3.2.0\_2").
+
+As a result of above configuration you will have your files installed to `js/bootstrap-3.2.0_2` ("bootstrap-sass-oficial" uses its own `packageName` convention), `js/jquery-2.1.1` and `js/requirejs-2.1.15` ("jquery" and "requirejs" fall back to main convention from `exportsOverride.packageName`).
+
 ### Wildcard and RegExp support
 
 If you have the same override rules for multiple Bower components you can make use of simple wildcard:
