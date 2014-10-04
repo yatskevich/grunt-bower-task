@@ -12,6 +12,39 @@ var Assets = function(cwd, componentsDir) {
   this._componentsDir = componentsDir;
 };
 
+/**
+ * Checks if parameter contains an extended definition that has "packageName"
+ * and "overrides" properties.
+ */
+function isExtendedOverride(overrides) {
+  return overrides && _(overrides).has('packageName') && _(overrides).has('overrides');
+}
+
+/**
+ * Gets overrides from an extended definition or returns "overrides" as is.
+ */
+function getOverrides(overrides) {
+  return isExtendedOverride(overrides) && _.isObject(overrides.overrides) ? overrides.overrides : overrides;
+}
+
+/**
+ * Gets "packageName" property if given an extended overrides definition or returns null.
+ */
+function getPackageName(overrides) {
+  return isExtendedOverride(overrides) ? overrides.packageName : null;
+}
+
+/**
+ * Gets Bower package version from its metadata.
+ *
+ * @param pkgMeta package metadata (returned by "bower.commands.info")
+ * @returns object with "major", "minor" and "revision" properties (extracted from metadata's version)
+ */
+function getPackageVersion(pkgMeta) {
+  var parts = pkgMeta.version.split(/[^0-9]/).concat([0, 0, 0]);
+  return { major: parts[0], minor: parts[1], revision: parts[2] };
+}
+
 Assets.prototype.addOverridden = function(override, pkg, pkgMeta, exportsOverride) {
   var pkgPath = path.join(this._componentsDir, pkg);
 
@@ -51,39 +84,6 @@ Assets.prototype.addAssets = function(filePatterns, pkg, assetType, pkgPath) {
 Assets.prototype.toObject = function() {
   return _.clone(this._assets);
 };
-
-/**
- * Checks if parameter contains an extended definition that has "packageName"
- * and "overrides" properties.
- */
-function isExtendedOverride(overrides) {
-  return overrides && _(overrides).has('packageName') && _(overrides).has('overrides');
-}
-
-/**
- * Gets overrides from an extended definition or returns "overrides" as is.
- */
-function getOverrides(overrides) {
-  return isExtendedOverride(overrides) && _.isObject(overrides.overrides) ? overrides.overrides : overrides;
-}
-
-/**
- * Gets "packageName" property if given an extended overrides definition or returns null.
- */
-function getPackageName(overrides) {
-  return isExtendedOverride(overrides) ? overrides.packageName : null;
-}
-
-/**
- * Gets Bower package version from its metadata.
- *
- * @param pkgMeta package metadata (returned by "bower.commands.info")
- * @returns object with "major", "minor" and "revision" properties (extracted from metadata's version)
- */
-function getPackageVersion(pkgMeta) {
-  var parts = pkgMeta.version.split(/[^0-9]/).concat([0, 0, 0]);
-  return { major: parts[0], minor: parts[1], revision: parts[2] };
-}
 
 
 var BowerAssets = function(bower, cwd) {

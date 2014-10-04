@@ -48,6 +48,7 @@ function verify(name, message, expected, test, bower) {
 exports.bower_assets = {
   setUp: function(done) {
     var bowerCommands = {
+      infoMap: {},
       list: new EventEmitter()
     };
     this.bowerCommands = bowerCommands;
@@ -56,6 +57,10 @@ exports.bower_assets = {
       commands: {
         list: function() {
           return bowerCommands.list;
+        },
+        info: function(pkg) {
+          bowerCommands.infoMap[pkg] = new EventEmitter();
+          return bowerCommands.infoMap[pkg];
         }
       },
       config: {
@@ -90,6 +95,7 @@ exports.bower_assets = {
       this.bower);
 
     this.bowerCommands.list.emit('end', {"jquery": path.normalize("components/jquery/jquery.js")});
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", version: "2.1.1"});
   },
 
   extendedComponentJson: function(test) {
@@ -124,6 +130,8 @@ exports.bower_assets = {
       ],
       "jquery": path.normalize("components/jquery/jquery.js")
     });
+    this.bowerCommands.infoMap["bootstrap-sass"].emit('end', {"name": "bootstrap-sass", "version": "3.2.0"});
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", "version": "2.1.1"});
   },
 
   overrideHonoringNativeBowerConfiguration: function(test) {
@@ -159,6 +167,8 @@ exports.bower_assets = {
       ],
       "jquery": path.normalize("bo_co/jquery/jquery.js")
     });
+    this.bowerCommands.infoMap["bootstrap"].emit('end', {"name": "bootstrap", "version": "3.2.0"});
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", "version": "2.1.1"});
   },
 
   overrideRegexBowerConfiguration: function(test) {
@@ -202,6 +212,9 @@ exports.bower_assets = {
         path.normalize("bo_co/underscore/underscore.css")
       ]
     });
+    this.bowerCommands.infoMap["bootstrap"].emit('end', {"name": "bootstrap", "version": "3.2.0"});
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", "version": "2.1.1"});
+    this.bowerCommands.infoMap["underscore"].emit('end', {"name": "underscore", "version": "1.0.17"});
   },
 
   support_bower_components_folder: function(test) {
@@ -227,5 +240,53 @@ exports.bower_assets = {
     this.bowerCommands.list.emit('end', {
       "jquery": path.normalize("bower_components/jquery/jquery.js")
     });
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", "version": "2.1.1"});
+  },
+
+  exportsOverrideWithPackageName: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "js": {
+        "jquery-2.1.1": [path.normalize("components/jquery/jquery.js")]
+      }
+    };
+
+    verify(
+      'exportsOverrideWithPackageName',
+      'should use metadata of "jquery" package',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('end', {"jquery": path.normalize("components/jquery/jquery.js")});
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", version: "2.1.1"});
+  },
+
+  exportsOverrideWithPackageNameMixed: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "js": {
+        //no packageName
+        "jquery": [path.normalize("components/jquery/jquery.js")],
+        //uses "{{version_safe}}"
+        "lodash-3.2.0_2": [path.normalize("components/lodash/lodash.js")]
+      }
+    };
+
+    verify(
+      'exportsOverrideWithPackageNameMixed',
+      'should use metadata of "bootstrap" package and leave "jquery" as is',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('end', {
+      "jquery": path.normalize("components/jquery/jquery.js"),
+      "lodash": path.normalize("components/lodash/lodash.js")
+    });
+    this.bowerCommands.infoMap["jquery"].emit('end', {"name": "jquery", version: "2.1.10"});
+    this.bowerCommands.infoMap["lodash"].emit('end', {"name": "lodash", version: "3.2.0+2"});
   }
 };
