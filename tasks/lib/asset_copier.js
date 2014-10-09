@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var glob = require("glob");
 var Emitter = require('events').EventEmitter;
 var wrench = require('wrench');
 var path = require('path');
@@ -45,6 +46,10 @@ Copier.prototype.copyAssets = function(type, assets) {
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
+      } else if(self.options.forceMain){
+          source = self.setMainFile(source, pkg);
+          destination = path.join(destinationDir, path.basename(source));
+          grunt.file.copy(source, destination);
       } else {
         destination = destinationDir;
         wrench.copyDirSyncRecursive(source, destination);
@@ -52,6 +57,29 @@ Copier.prototype.copyAssets = function(type, assets) {
       self.report(source, destination, isFile);
     });
   });
+};
+
+Copier.prototype.setMainFile = function (src, pkg) {
+
+    var self = this,
+        pattern = src + "/**/" + pkg.slice(pkg.indexOf("-") + 1) + ".js";
+
+    self.getMainFile(pattern);
+
+    if(self.src !== undefined){
+        src = self.src;
+    }
+
+    return src;
+};
+
+Copier.prototype.getMainFile = function (pattern) {
+    var self = this,
+        source  = glob.sync(pattern, {nocase: true});
+
+    _(source).each(function(item){
+        self.src = item;
+    });
 };
 
 module.exports = Copier;
