@@ -42,12 +42,16 @@ Copier.prototype.copyAssets = function(type, assets) {
 
       var isFile = fs.statSync(source).isFile();
       var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg, source));
+      var mainPattern = {
+          main: pkg.slice(pkg.indexOf("-") + 1),
+          ext : "js"
+      };
       grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
       } else if(self.options.forceMain){
-          source = self.setMainFile(source, pkg);
+          source = self.findMainFile(source, pkg, mainPattern);
           destination = path.join(destinationDir, path.basename(source));
           grunt.file.copy(source, destination);
       } else {
@@ -59,27 +63,19 @@ Copier.prototype.copyAssets = function(type, assets) {
   });
 };
 
-Copier.prototype.setMainFile = function (src, pkg) {
+Copier.prototype.findMainFile = function (src, pkg, ptrn) {
 
-    var self = this,
-        pattern = src + "/**/" + pkg.slice(pkg.indexOf("-") + 1) + ".js";
+    _.extend(ptrn, this.options.mainPattern);
 
-    self.getMainFile(pattern);
+    var fileNamePtrn = ptrn.main + "." + ptrn.ext,
+        pattern = src + "/**/" + fileNamePtrn,
+        source = glob.sync(pattern, {nocase: true});
 
-    if(self.src !== undefined){
-        src = self.src;
+    if(source[0] === undefined) {
+        throw new ReferenceError('Unable to find "' + fileNamePtrn + '" in ' + src + ' directory');
     }
 
-    return src;
-};
-
-Copier.prototype.getMainFile = function (pattern) {
-    var self = this,
-        source  = glob.sync(pattern, {nocase: true});
-
-    _(source).each(function(item){
-        self.src = item;
-    });
+    return source[0];
 };
 
 module.exports = Copier;
