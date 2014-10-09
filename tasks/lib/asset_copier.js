@@ -42,16 +42,13 @@ Copier.prototype.copyAssets = function(type, assets) {
 
       var isFile = fs.statSync(source).isFile();
       var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg, source));
-      var mainPattern = {
-          main: pkg.slice(pkg.indexOf("-") + 1),
-          ext : "js"
-      };
+
       grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
       } else if(self.options.forceMain){
-          source = self.findMainFile(source, pkg, mainPattern);
+          source = self.findMainFile(source, pkg);
           destination = path.join(destinationDir, path.basename(source));
           grunt.file.copy(source, destination);
       } else {
@@ -62,8 +59,12 @@ Copier.prototype.copyAssets = function(type, assets) {
     });
   });
 };
+Copier.prototype.findMainFile = function (src, pkg) {
 
-Copier.prototype.findMainFile = function (src, pkg, ptrn) {
+    var ptrn = {
+        main: pkg.slice(pkg.indexOf("-") + 1),
+        ext : "js"
+    };
 
     _.extend(ptrn, this.options.mainPattern);
 
