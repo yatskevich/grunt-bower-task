@@ -66,17 +66,19 @@ Copier.prototype.findMainFile = function (src, pkg) {
         ext : "js"
     };
 
+    var patternOrig = src + "/**/" + ptrn.main + "." + ptrn.ext;
+
     _.extend(ptrn, this.options.mainPattern);
 
-    var fileNamePtrn = ptrn.main + "." + ptrn.ext,
-        pattern = src + "/**/" + fileNamePtrn,
-        source = glob.sync(pattern, {nocase: true});
+    var fileMatch = ptrn.main + "." + ptrn.ext,
+        patternNew = src + "/**/" + fileMatch,
+        source = glob.sync(patternNew, {nocase: true})[0] || glob.sync(patternOrig, {nocase: true})[0];
 
-    if(source[0] === undefined) {
-        throw new ReferenceError('Unable to find "' + fileNamePtrn + '" in ' + src + ' directory');
+    if(source === undefined) {
+        throw new ReferenceError('Unable to find "' + fileMatch + '" in ' + src + ' directory');
     }
 
-    return source[0];
+    return source;
 };
 
 module.exports = Copier;
