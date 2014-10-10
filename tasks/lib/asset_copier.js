@@ -86,7 +86,7 @@ Copier.prototype.findMainFile = function (src, pkg) {
                     'filePattern': filePattern.cyan,
                     'pkg': pkg.cyan
                 },
-                msg = 'Unable to install <%= pkg %>, because <%= filePattern %> not found. '
+                msg = 'Unable to copy package <%= pkg %>, because <%= filePattern %> not found. '
                     + 'Use "exportsOverride" in bower.json instead.';
 
             msg = _.template(msg, tmplData);
