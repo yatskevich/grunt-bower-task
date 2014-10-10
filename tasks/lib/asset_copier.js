@@ -59,26 +59,42 @@ Copier.prototype.copyAssets = function(type, assets) {
     });
   });
 };
+
 Copier.prototype.findMainFile = function (src, pkg) {
 
     var ptrn = {
         main: pkg.slice(pkg.indexOf("-") + 1),
-        ext : "js"
+        ext: "js"
     };
 
-    var patternOrig = src + "/**/" + ptrn.main + "." + ptrn.ext;
+    var ptrnOrig = src + "/**/" + ptrn.main + "." + ptrn.ext;
 
     _.extend(ptrn, this.options.mainPattern);
 
-    var fileMatch = ptrn.main + "." + ptrn.ext,
-        patternNew = src + "/**/" + fileMatch,
-        source = glob.sync(patternNew, {nocase: true})[0] || glob.sync(patternOrig, {nocase: true})[0];
+    var filePattern = ptrn.main + "." + ptrn.ext,
+        patternNew = src + "/**/" + filePattern,
+        source = glob.sync(patternNew, {nocase: true})[0] || glob.sync(ptrnOrig, {nocase: true})[0];
 
-    if(source === undefined) {
-        throw new ReferenceError('Unable to find "' + fileMatch + '" in ' + src + ' directory');
+    try {
+        if (source === undefined) {
+            var tmplData = {
+                    'filePattern': filePattern.cyan,
+                    'pkg': pkg.cyan
+                },
+                msg = 'Unable to install <%= pkg %>, because <%= filePattern %> not found. '
+                    + 'Use "exportsOverride" in bower.json instead.';
+
+            msg = _.template(msg, tmplData);
+
+            throw new ReferenceError(msg);
+        }
     }
-
-    return source;
-};
+    catch (err) {
+        console.error((err.name + ': ').red + err.message);
+    }
+    finally {
+        return source;
+    }
+}
 
 module.exports = Copier;
