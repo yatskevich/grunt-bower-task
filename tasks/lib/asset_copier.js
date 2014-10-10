@@ -43,7 +43,6 @@ Copier.prototype.copyAssets = function(type, assets) {
       var isFile = fs.statSync(source).isFile();
       var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg, source));
 
-      grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
@@ -57,6 +56,10 @@ Copier.prototype.copyAssets = function(type, assets) {
         destination = destinationDir;
         wrench.copyDirSyncRecursive(source, destination);
       }
+      if(source !== undefined) {
+          grunt.file.mkdir(destinationDir);
+      }
+
       self.report(source, destination, isFile);
     });
   });
