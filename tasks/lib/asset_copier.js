@@ -87,7 +87,7 @@ Copier.prototype.findMainFile = function (src, pkg) {
                     'pkg': pkg.cyan
                 },
                 msg = 'Unable to copy package <%= pkg %>, because <%= filePattern %> not found. ' +
-                    'Use "exportsOverride" in bower.json instead.';
+                      'Use "exportsOverride" in bower.json instead.';
 
             msg = _.template(msg, tmplData);
 
