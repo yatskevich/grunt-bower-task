@@ -44,7 +44,7 @@ module.exports = function(grunt) {
     simplemocha: {
       options: {
         timeout: '2s',
-        reporter: 'nyan'
+        reporter: 'spec'
       },
 
       all: { src: ['specs/**/*.js'] }

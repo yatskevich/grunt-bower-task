@@ -68,6 +68,8 @@ module.exports = function(grunt) {
     var tasks = [],
       done = this.async(),
       options = this.options({
+        forceMain: false,
+        forceMainPattern: null,
         cleanTargetDir: false,
         cleanBowerDir: false,
         targetDir: './lib',
