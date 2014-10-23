@@ -42,10 +42,10 @@ Assets.prototype.toObject = function() {
 };
 
 
-var BowerAssets = function(bower, cwd) {
+var BowerAssets = function(bower, cwd, json) {
   this.bower = bower;
   this.cwd = cwd;
-  this.config = bower.config.json || 'bower.json';
+  this.config = bower.config.json || json;
   this.assets = new Assets(cwd, bower.config.directory);
 };
 

@@ -154,6 +154,12 @@ An options object passed through to the `bower.install` api, possible options ar
 }
 ```
 
+#### options.json
+Type: `String`
+Default value: `bower.json`
+
+Packages manifest file.
+
 ### Usage Examples
 
 #### Default Options
@@ -170,7 +176,8 @@ grunt.initConfig({
         verbose: false,
         cleanTargetDir: false,
         cleanBowerDir: false,
-        bowerOptions: {}
+        bowerOptions: {},
+        json: 'bower.json'
       }
     }
   }
