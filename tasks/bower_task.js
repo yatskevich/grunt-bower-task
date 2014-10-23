@@ -53,7 +53,7 @@ module.exports = function(grunt) {
   }
 
   function copy(options, callback) {
-    var bowerAssets = new BowerAssets(bower, options.cwd);
+    var bowerAssets = new BowerAssets(bower, options.cwd, options.json);
     bowerAssets.on('end', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
@@ -75,7 +75,8 @@ module.exports = function(grunt) {
         install: true,
         verbose: false,
         copy: true,
-        bowerOptions: {}
+        bowerOptions: {},
+        json: 'bower.json'
       }),
       add = function(successMessage, fn) {
         tasks.push(function(callback) {
