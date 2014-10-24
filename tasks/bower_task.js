@@ -11,6 +11,7 @@
 module.exports = function(grunt) {
 
   var bower,
+    fs,
     path,
     async,
     colors,
@@ -21,6 +22,7 @@ module.exports = function(grunt) {
 
   function requireDependencies () {
     bower = require('bower'),
+    fs = require('fs'),
     path = require('path'),
     async = require('async'),
     colors = require('colors'),
@@ -38,13 +40,39 @@ module.exports = function(grunt) {
     grunt.fail.fatal(error);
   }
 
-  function clean(dir, callback) {
-    rimraf(dir);
+  function clean(dir, options, callback) {
+    var packages = options.packages,
+      rmpaths;
+
+    if (!packages.length) {
+      rmpaths = [dir];
+    } else {
+      rmpaths = packages.map(function(x) {
+        return path.join(dir, x);
+      });
+    }
+
+    rmpaths.forEach(function(rmpath) {
+      var msg = 'Remove ' + rmpath;
+      if (fs.existsSync(rmpath)) {
+        try {
+          rimraf(rmpath);
+          log.logger.ok(msg);
+        }
+        catch (ex) {
+          log.logger.error(msg);
+          throw ex;
+        }
+      } else {
+        log.logger.error(msg + ' NOTFOUND');
+      }
+    });
+
     callback();
   }
 
   function install(options, callback) {
-    bower.commands.install([], options.bowerOptions)
+    bower.commands.install(options.packages, options.bowerOptions)
       .on('log', function(result) {
         log(['bower', result.id.cyan, result.message].join(' '));
       })
@@ -85,6 +113,7 @@ module.exports = function(grunt) {
         prune: false,
         verbose: false,
         copy: true,
+        packages: [],
         bowerOptions: {}
       }),
       add = function(successMessage, fn) {
@@ -116,7 +145,7 @@ module.exports = function(grunt) {
 
     if (options.cleanTargetDir) {
       add('Cleaned target dir ' + targetDir.grey, function(callback) {
-        clean(targetDir, callback);
+        clean(targetDir, options, callback);
       });
     }
 
@@ -140,7 +169,7 @@ module.exports = function(grunt) {
 
     if (options.cleanBowerDir) {
       add('Cleaned bower dir ' + bowerDir.grey, function(callback) {
-        clean(bowerDir, callback);
+        clean(bowerDir, options, callback);
       });
     }
 
