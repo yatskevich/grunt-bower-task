@@ -74,7 +74,7 @@ module.exports = function(grunt) {
         layout: 'byType',
         install: true,
         verbose: false,
-        copy: true,
+        copy: false,
         bowerOptions: {}
       }),
       add = function(successMessage, fn) {
