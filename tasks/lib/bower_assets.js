@@ -42,9 +42,10 @@ Assets.prototype.toObject = function() {
 };
 
 
-var BowerAssets = function(bower, cwd) {
+var BowerAssets = function(bower, cwd, onlyDepedencies) {
   this.bower = bower;
   this.cwd = cwd;
+  this.onlyDependencies = onlyDepedencies;
   this.config = bower.config.json || 'bower.json';
   this.assets = new Assets(cwd, bower.config.directory);
 };
@@ -56,10 +57,15 @@ BowerAssets.prototype.get = function() {
   var bower = this.bower;
   var bowerConfig = grunt.file.readJSON(path.join(this.cwd, this.config));
   var exportsOverride = bowerConfig.exportsOverride;
+  var bowerDependencies = this.onlyDependencies ? bowerConfig.dependencies : {};
 
   var paths = bower.commands.list({paths: true});
   paths.on('end', function(data) {
-    this.emit('end', this.mergePaths(data, exportsOverride ? exportsOverride : {}));
+    this.emit('end', this.mergePaths(
+      data,
+      exportsOverride ? exportsOverride : {},
+      bowerDependencies
+    ));
   }.bind(this));
   paths.on('error', function(err) {
     this.emit('error', err);
@@ -71,24 +77,35 @@ BowerAssets.prototype.get = function() {
 /**
  *
  * @param bowerComponents - output of 'bower list' command
- * @param overrides - overrides coming from 'bower.json'
+ * @param overrides - overrides coming from 'bower.json : exportsOverride'
+ * @param bowerDependencies - if true only installs packages that are in bower 'depedencies' object
  *
  * @returns assets grouped by component and type
  */
-BowerAssets.prototype.mergePaths = function(bowerComponents, overrides) {
+BowerAssets.prototype.mergePaths = function(bowerComponents, overrides, bowerDependencies) {
   var findOverride = function(pkg) {
     return _(overrides).find(function(override, override_key) {
       return packageMatcher.matches(pkg, override_key);
     });
   };
 
-  _(bowerComponents).each(function(pkgFiles, pkg) {
-    var activeOverride = findOverride(pkg);
+  var findDependency = function (pkg) {
+    return _(bowerDependencies).find(function (dependency, dependency_key) {
+        return packageMatcher.matches(pkg, dependency_key);
+    });
+  };
 
-    if (activeOverride) {
-      this.assets.addOverridden(activeOverride, pkg);
-    } else {
-      this.assets.addUntyped(pkgFiles, pkg);
+  _(bowerComponents).each(function(pkgFiles, pkg) {
+    var existsDepedency = this.onlyDependencies ? findDependency(pkg) !== undefined : true;
+
+    if (existsDepedency) {
+      var activeOverride = findOverride(pkg);
+
+      if (activeOverride) {
+        this.assets.addOverridden(activeOverride, pkg);
+      } else {
+        this.assets.addUntyped(pkgFiles, pkg);
+      }
     }
   }, this);
 
