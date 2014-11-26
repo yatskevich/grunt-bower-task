@@ -73,6 +73,12 @@ Default value: `true`
 
 Copy Bower packages to target directory.
 
+#### options.onlyDepedencies
+Type: `Boolean`
+Default value: `false`
+
+If copy is set to `true` then only copies the packages that are declared in bower.json:depedencies.
+
 #### options.cleanup
 Type: `boolean`
 Default value: `undefined`
