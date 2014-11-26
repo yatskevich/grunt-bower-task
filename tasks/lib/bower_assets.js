@@ -96,7 +96,7 @@ BowerAssets.prototype.mergePaths = function(bowerComponents, overrides, bowerDep
   };
 
   _(bowerComponents).each(function(pkgFiles, pkg) {
-    var existsDepedency = this.onlyDependencies ? findDependency(pkg) != undefined : true;
+    var existsDepedency = this.onlyDependencies ? findDependency(pkg) !== undefined : true;
 
     if (existsDepedency) {
       var activeOverride = findOverride(pkg);
