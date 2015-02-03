@@ -10,7 +10,17 @@
 
 module.exports = function(grunt) {
 
-  var bower = require('bower'),
+  var bower,
+    path,
+    async,
+    colors,
+    rimraf,
+    BowerAssets,
+    AssetCopier,
+    LayoutsManager;
+
+  function requireDependencies () {
+    bower = require('bower'),
     path = require('path'),
     async = require('async'),
     colors = require('colors'),
@@ -18,6 +28,7 @@ module.exports = function(grunt) {
     BowerAssets = require('./lib/bower_assets'),
     AssetCopier = require('./lib/asset_copier'),
     LayoutsManager = require('./lib/layouts_manager');
+  }
 
   function log(message) {
     log.logger.writeln(message);
@@ -74,8 +85,16 @@ module.exports = function(grunt) {
           });
         });
       },
-      bowerDir = path.resolve(bower.config.directory),
-      targetDir = path.resolve(options.targetDir);
+      bowerDir,
+      targetDir;
+
+    // calling require on the dependencies has been delayed to prevent slow
+    // dependencies delaying the startup of grunt even if this task is not used
+    // at all
+    requireDependencies();
+
+    bowerDir = path.resolve(bower.config.directory);
+    targetDir = path.resolve(options.targetDir);
 
     log.logger = options.verbose ? grunt.log : grunt.verbose;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
