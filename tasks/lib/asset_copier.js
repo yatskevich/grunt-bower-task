@@ -35,6 +35,8 @@ Copier.prototype.copy = function() {
 
 Copier.prototype.copyAssets = function(type, assets) {
   var self = this;
+  var options = this.options;
+
   _(assets).each(function(sources, pkg) {
     _(sources).each(function(source) {
       var destination;
@@ -47,7 +49,11 @@ Copier.prototype.copyAssets = function(type, assets) {
         grunt.file.copy(source, destination);
       } else {
         destination = destinationDir;
-        wrench.copyDirSyncRecursive(source, destination);
+        var opts = {};
+        if (!options || !options.cleanTargetDir) {
+          opts.preserve = true;
+        }
+        wrench.copyDirSyncRecursive(source, destination, opts);
       }
       self.report(source, destination, isFile);
     });
