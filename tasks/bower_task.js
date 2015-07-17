@@ -99,9 +99,9 @@ module.exports = function(grunt) {
     log.logger = options.verbose ? grunt.log : grunt.verbose;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
 	
-	if (options.cwd === undefined){
-	  options.cwd = grunt.option('base') || process.cwd();
-	}
+    if (options.cwd === undefined){
+      options.cwd = grunt.option('base') || process.cwd();
+    }
 
     if (options.cleanup !== undefined) {
       options.cleanTargetDir = options.cleanBowerDir = options.cleanup;
