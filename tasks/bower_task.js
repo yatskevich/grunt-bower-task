@@ -20,13 +20,13 @@ module.exports = function(grunt) {
     LayoutsManager;
 
   function requireDependencies () {
-    bower = require('bower'),
-    path = require('path'),
-    async = require('async'),
-    colors = require('colors'),
-    rimraf = require('rimraf').sync,
-    BowerAssets = require('./lib/bower_assets'),
-    AssetCopier = require('./lib/asset_copier'),
+    bower = require('bower');
+    path = require('path');
+    async = require('async');
+    colors = require('colors');
+    rimraf = require('rimraf').sync;
+    BowerAssets = require('./lib/bower_assets');
+    AssetCopier = require('./lib/asset_copier');
     LayoutsManager = require('./lib/layouts_manager');
   }
 
