@@ -1,4 +1,5 @@
 # grunt-bower-task [![Build Status](https://travis-ci.org/yatskevich/grunt-bower-task.png)](https://travis-ci.org/yatskevich/grunt-bower-task)
+[![npm](https://img.shields.io/npm/v/npm.svg?maxAge=2592000)](https://github.com/yatskevich/grunt-bower-task)
 [![Dependency Status](https://david-dm.org/yatskevich/grunt-bower-task.svg)](https://david-dm.org/yatskevich/grunt-bower-task)
 [![devDependency Status](https://david-dm.org/yatskevich/grunt-bower-task/dev-status.svg)](https://david-dm.org/yatskevich/grunt-bower-task#info=devDependencies)
 
