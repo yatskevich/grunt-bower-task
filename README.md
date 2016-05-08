@@ -170,6 +170,7 @@ grunt.initConfig({
   bower: {
     install: {
       options: {
+        copy: false,
         targetDir: './lib',
         layout: 'byType',
         install: true,
