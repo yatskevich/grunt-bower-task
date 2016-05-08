@@ -82,7 +82,7 @@ module.exports = function(grunt) {
         targetDir: './lib',
         layout: 'byType',
         install: true,
-        prune: true,
+        prune: false,
         verbose: false,
         copy: true,
         bowerOptions: {}
