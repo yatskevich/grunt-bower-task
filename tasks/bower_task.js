@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         install: true,
         prune: false,
         verbose: false,
-        copy: true,
+        copy: false,
         bowerOptions: {}
       }),
       add = function(successMessage, fn) {
