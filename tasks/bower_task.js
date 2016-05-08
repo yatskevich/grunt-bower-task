@@ -43,6 +43,15 @@ module.exports = function(grunt) {
     callback();
   }
 
+  function prune(options,callback) {
+    bower.commands.prune([], options.bowerOptions)
+      .on('log', function(result) {
+        log(['bower', result.id.cyan, result.message].join(' '));
+      })
+      .on('error',fail)
+      .on('end',callback);
+  }
+
   function install(options, callback) {
     bower.commands.install([], options.bowerOptions)
       .on('log', function(result) {
@@ -73,6 +82,7 @@ module.exports = function(grunt) {
         targetDir: './lib',
         layout: 'byType',
         install: true,
+        prune: true,
         verbose: false,
         copy: true,
         bowerOptions: {}
@@ -114,6 +124,12 @@ module.exports = function(grunt) {
       add('Installed bower packages', function(callback) {
         install(options, callback);
       });
+    }
+
+    if (options.prune) {
+      add('Pruned bower packages', function(callback) {
+        prune(options,callback);
+        });
     }
 
     if (options.copy) {
