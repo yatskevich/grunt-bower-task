@@ -288,11 +288,6 @@ Usage example in `bower.json`:
 - Pay attention to what characters you use in RegExp overrides - '.' and '*' has special meaning in regular expressions.
 - If you put `*` as the first entry in `exportsOverride`, it'll match everything, so other rules will be skipped.
 
-## Contributing
-Please, use `devel` branch for all pull requests.
-
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
-
 ## License
 Copyright (c) 2012-2013 Ivan Yatskevich
 
