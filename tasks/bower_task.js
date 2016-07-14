@@ -18,6 +18,44 @@ module.exports = function (grunt) {
     AssetCopier,
     LayoutsManager;
 
+    /* ===============================================
+                      Helper Methods
+       =============================================*/
+    function requireDependencies() {
+    bower = require("bower");
+    path = require("path");
+    async = require("async");
+    colors = require("colors");
+    rimraf = require("rimraf").sync;
+    validator = require('bower-json');
+    BowerAssets = require("./lib/bower_assets");
+    AssetCopier = require("./lib/asset_copier");
+    LayoutsManager = require("./lib/layouts_manager");
+  }
+
+  function log(message) {
+    log.logger.writeln(message);
+  }
+
+  function validate(options) {
+    var bowerFile = bower.config.json || "bower.json";
+
+    validator.read(bowerFile, function (error, json) {
+      if (error) {
+        console.error("bower.json validation: Failed - " + error.message);
+      }
+      else {
+        if (options.verbose) {
+          console.info("bower.json validation: Passed");
+        }
+      }
+    });
+  }
+
+  /* ===============================================
+                    Core Methods
+    =============================================*/
+
   function clean(dir, callback) {
     rimraf(dir);
     callback();
@@ -42,19 +80,16 @@ module.exports = function (grunt) {
   function install(options, callback) {
 
     validate(options);
-    /*
+
     bower.commands.install([], options.bowerOptions)
       .on("log", function(result) {
         log(["bower", result.id.cyan, result.message].join(" "));
       })
       .on("error", fail)
       .on("end", callback);
-    */
   }
 
-  function log(message) {
-    log.logger.writeln(message);
-  }
+
 
   function prune(options, callback) {
     bower.commands.prune([], options.bowerOptions)
@@ -139,30 +174,5 @@ module.exports = function (grunt) {
     async.series(tasks, done);
   });
 
-  function requireDependencies() {
-    bower = require("bower");
-    path = require("path");
-    async = require("async");
-    colors = require("colors");
-    rimraf = require("rimraf").sync;
-    validator = require('bower-json');
-    BowerAssets = require("./lib/bower_assets");
-    AssetCopier = require("./lib/asset_copier");
-    LayoutsManager = require("./lib/layouts_manager");
-  }
 
-  function validate(options) {
-    var bowerFile = bower.config.json || "bower.json";
-
-    validator.read(bowerFile, function (error, json) {
-      if (error) {
-        console.error("bower.json validation: Failed - " + error.message);
-      }
-      else {
-        if (options.verbose) {
-          console.info("bower.json validation: Passed");
-        }
-      }
-    });
-  }
 };
