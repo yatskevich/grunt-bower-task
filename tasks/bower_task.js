@@ -1,5 +1,5 @@
 /*
- * grunt-bower-task v0.0.4 (https://github.com/yatskevich/grunt-bower-task)
+ * grunt-bower-task v0.5.0 (https://github.com/yatskevich/grunt-bower-task)
  * Copyright 2012-2016 Ivan Yatskevich
  * Licensed under the MIT license.
  */
