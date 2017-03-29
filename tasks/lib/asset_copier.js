@@ -5,10 +5,11 @@ var path = require('path');
 var grunt = require('grunt');
 var fs = require('fs');
 
-var Copier = function(assets, options, report) {
+var Copier = function(assets, options, report, reportPackageFile ) {
   this.assets = assets;
   this.options = options;
   this.report = report;
+  this.reportPackageFile = reportPackageFile;
 };
 
 Copier.prototype = Object.create(Emitter.prototype);
@@ -45,6 +46,7 @@ Copier.prototype.copyAssets = function(type, assets) {
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
         grunt.file.copy(source, destination);
+        self.reportPackageFile( pkg, destination );
       } else {
         destination = destinationDir;
         wrench.copyDirSyncRecursive(source, destination);
