@@ -1,4 +1,7 @@
 # grunt-bower-task [![Build Status](https://travis-ci.org/yatskevich/grunt-bower-task.png)](https://travis-ci.org/yatskevich/grunt-bower-task)
+[![npm](https://img.shields.io/npm/v/grunt-bower-task.svg?maxAge=2592000)](https://github.com/yatskevich/grunt-bower-task)
+[![Dependency Status](https://david-dm.org/yatskevich/grunt-bower-task.svg)](https://david-dm.org/yatskevich/grunt-bower-task)
+[![devDependency Status](https://david-dm.org/yatskevich/grunt-bower-task/dev-status.svg)](https://david-dm.org/yatskevich/grunt-bower-task#info=devDependencies)
 
 > Install Bower packages. Smartly.
 
@@ -55,6 +58,12 @@ Default value: `true`
 
 Whether you want to run bower install task itself (e.g. you might not want to do this each time on CI server).
 
+#### options.prune
+Type: `Boolean`
+Default value: `false`
+
+Whether you want to run bower prune task itself (e.g. you might not want to do this each time on CI server).
+
 #### options.cleanTargetDir
 Type: `Boolean`
 Default value: `false`
@@ -69,7 +78,7 @@ Will remove bower's dir after copying all needed files into target dir.
 
 #### options.copy
 Type: `Boolean`
-Default value: `true`
+Default value: `false`
 
 Copy Bower packages to target directory.
 
@@ -164,10 +173,12 @@ grunt.initConfig({
   bower: {
     install: {
       options: {
+        copy: false,
         targetDir: './lib',
         layout: 'byType',
         install: true,
         verbose: false,
+        prune: false,
         cleanTargetDir: false,
         cleanBowerDir: false,
         bowerOptions: {}
@@ -276,25 +287,6 @@ Usage example in `bower.json`:
 - An evaluation order depends on the order of entries in `exportsOverride` section in your `bower.json`.
 - Pay attention to what characters you use in RegExp overrides - '.' and '*' has special meaning in regular expressions.
 - If you put `*` as the first entry in `exportsOverride`, it'll match everything, so other rules will be skipped.
-
-## Contributing
-Please, use `devel` branch for all pull requests.
-
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
-
-## Release History
-* 2014/07/20 - v0.4.0 - Update to Bower 1.3.x and Node to 0.10 (thanks, @johnkchiu), speed up task loading (thanks, @c089), flexible layouts (thanks, @grawk)
-* 2013/11/10 - v0.3.4 - Fix paths handling of glob patterns in components' "main" files.
-* 2013/11/08 - v0.3.3 - Added `bowerOptions` (thanks to @xzyfer), fixed paths handling using `glob` module (thanks to @leon).
-* 2013/09/08 - v0.3.2 - Update to Bower 1.2.x, fixed logging issue.
-* 2013/08/09 - v0.3.1 - Update to Bower 1.1.x, fixed compatibility issue with new Bower's API.
-* 2013/08/05 - v0.3.0 - Update to Bower 1.0.x, added wildcard/regex support, improve docs.
-* 2013/05/11 - v0.2.3 - Update to bower 0.9.x, docs improvement, Windows-compatible paths in tests.
-* 2013/04/23 - v0.2.2 - Fix backward-compatibility issue (related to `cleanup` option).
-* 2013/04/22 - v0.2.1 - Split 'install' to 'install' and 'copy' steps to support flexible workflow, add support for grunt's `--base` option.
-* 2013/03/30 - v0.2.0 - Added support for flexible assets layout, honor native Bower's configuration, reduce log output.
-* 2013/03/18 - v0.1.1 - Updated dependencies, minor fixes.
-* 2012/11/25 - v0.1.0 - Initial release.
 
 ## License
 Copyright (c) 2012-2013 Ivan Yatskevich
