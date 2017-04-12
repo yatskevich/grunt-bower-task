@@ -4,9 +4,10 @@ var path = require('path');
 var grunt = require('grunt');
 var fs = require('fs-extra');
 
-var Copier = function(assets, options, report) {
+var Copier = function(assets, options, componentsDir, report) {
   this.assets = assets;
   this.options = options;
+  this.componentsDir = componentsDir;
   this.report = report;
 };
 
@@ -39,7 +40,9 @@ Copier.prototype.copyAssets = function(type, assets) {
       var destination;
 
       var isFile = fs.statSync(source).isFile();
-      var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg, source));
+      var sourceDir = path.relative(path.join(self.componentsDir, pkg), path.dirname(source));
+      var destinationDir = path.join(self.options.targetDir, self.options.layout(type, pkg, sourceDir));
+
       grunt.file.mkdir(destinationDir);
       if (isFile) {
         destination = path.join(destinationDir, path.basename(source));
