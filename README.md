@@ -82,6 +82,8 @@ Default value: `false`
 
 Copy Bower packages to target directory.
 
+**NOTE:** If set to false then the installed components will be left in the bower_components folder, which is default bower behaviour. Also setting this to false will allow the task to pass through runs where the bower.json file is not present.
+
 #### options.cleanup
 Type: `boolean`
 Default value: `undefined`
