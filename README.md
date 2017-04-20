@@ -78,7 +78,7 @@ Will remove bower's dir after copying all needed files into target dir.
 
 #### options.copy
 Type: `Boolean`
-Default value: `false`
+Default value: `true`
 
 Copy Bower packages to target directory.
 
