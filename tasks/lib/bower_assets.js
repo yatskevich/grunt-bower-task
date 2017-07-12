@@ -86,6 +86,7 @@ BowerAssets.prototype.mergePaths = function(bowerComponents, overrides) {
     var activeOverride = findOverride(pkg);
 
     if (activeOverride) {
+      activeOverride = JSON.parse(_.template(JSON.stringify(activeOverride))({component: pkg}));
       this.assets.addOverridden(activeOverride, pkg);
     } else {
       this.assets.addUntyped(pkgFiles, pkg);
