@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                       Helper Methods
        =============================================*/
     function requireDependencies() {
-    bower = require("bower");
+    bower = require("cns-bower");
     path = require("path");
     async = require("async");
     colors = require("colors");

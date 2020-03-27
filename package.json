@@ -1,5 +1,5 @@
 {
-  "name": "grunt-bower-task",
+  "name": "grunt-cns-bower-task",
   "description": "Install Bower packages.",
   "version": "0.5.0",
   "homepage": "https://github.com/yatskevich/grunt-bower-task",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "async": "^2.3.0",
-    "bower": "^1.7.9",
+    "cns-bower": "^1.8.8",
     "bower-json": "^0.8.1",
     "colors": "^1.1.2",
     "fs-extra": "^2.1.2",
