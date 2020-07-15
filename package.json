@@ -43,7 +43,7 @@
     "bower-json": "^0.8.1",
     "colors": "^1.1.2",
     "fs-extra": "^2.1.2",
-    "lodash": "~0.10.0",
+    "lodash": "~4.17.19",
     "rimraf": "^2.6.1"
   },
   "devDependencies": {
