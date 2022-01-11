@@ -23,7 +23,7 @@ Copier.prototype.copy = function() {
       this.emit('error', err);
       return false;
     }
-  }, this);
+  }.bind(this));
 
   if (!error) {
     this.emit('copied');

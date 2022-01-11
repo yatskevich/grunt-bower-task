@@ -1,3 +1,6 @@
+### v0.6.0
+   * Update to lodash 4.17.21
+
 ### v0.4.0
    * Update to Bower 1.3.x and Node to 0.10 (thanks, @johnkchiu), speed up task loading (thanks, @c089), flexible layouts (thanks, @grawk)
 

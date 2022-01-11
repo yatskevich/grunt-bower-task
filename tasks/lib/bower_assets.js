@@ -15,7 +15,7 @@ Assets.prototype.addOverridden = function(override, pkg) {
 
   _(override).each(function(overriddenPaths, assetType) {
     this.addAssets(overriddenPaths, pkg, assetType, pkgPath);
-  }, this);
+  }.bind(this));
 };
 
 Assets.prototype.addUntyped = function(pkgFiles, pkg) {
@@ -34,7 +34,7 @@ Assets.prototype.addAssets = function(filePatterns, pkg, assetType, pkgPath) {
   this._assets[assetType] = this._assets[assetType] || {};
   this._assets[assetType][pkg] = _(grunt.file.expand({cwd: basePath}, filePatterns)).map(function(expandedPath) {
     return path.join(pkgPath, expandedPath);
-  });
+  }).value();
 };
 
 Assets.prototype.toObject = function() {
@@ -90,7 +90,7 @@ BowerAssets.prototype.mergePaths = function(bowerComponents, overrides) {
     } else {
       this.assets.addUntyped(pkgFiles, pkg);
     }
-  }, this);
+  }.bind(this));
 
   return this.assets.toObject();
 };
