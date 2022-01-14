@@ -41,7 +41,7 @@
     "async": "^2.3.0",
     "bower": "^1.7.9",
     "bower-json": "^0.8.1",
-    "@dabh/colors": "^1.4.0",
+    "colors": "1.4.0",
     "fs-extra": "^2.1.2",
     "lodash": "^4.17.21",
     "rimraf": "^2.6.1"
