@@ -1,3 +1,5 @@
+### v0.6.1
+   * Pin colors to 1.4.0
 ### v0.6.0
    * Update to lodash 4.17.21
 
