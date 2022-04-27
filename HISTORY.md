@@ -1,3 +1,5 @@
+### v0.6.2
+   * Bump grunt version to 1.5.2
 ### v0.6.1
    * Pin colors to 1.4.0
 ### v0.6.0
