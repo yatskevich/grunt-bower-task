@@ -81,7 +81,7 @@ module.exports = function (grunt) {
 
     validate(options);
 
-    bower.commands.install([], options.bowerOptions)
+    bower.commands.install([], options.bowerOptions, {cwd:options.cwd})
       .on("log", function(result) {
         log(["bower", result.id.cyan, result.message].join(" "));
       })
@@ -135,7 +135,10 @@ module.exports = function (grunt) {
 
     log.logger = options.verbose ? grunt.log : grunt.verbose;
     options.layout = LayoutsManager.getLayout(options.layout, fail);
-    options.cwd = grunt.option("base") || process.cwd();
+    
+    if (options.cwd === undefined){
+      options.cwd = grunt.option('base') || process.cwd();
+    }
 
     if (options.cleanup !== undefined) {
       options.cleanTargetDir = options.cleanBowerDir = options.cleanup;
