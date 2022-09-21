@@ -1,6 +1,7 @@
 # grunt-bower-task [![Build Status](https://app.travis-ci.com/yatskevich/grunt-bower-task.svg?branch=devel)](https://app.travis-ci.com/yatskevich/grunt-bower-task)
 [![npm](https://img.shields.io/npm/v/grunt-bower-task.svg)](https://github.com/yatskevich/grunt-bower-task)
 [![Dependency Status](https://img.shields.io/librariesio/github/yatskevich/grunt-bower-task)](https://libraries.io/npm/grunt-bower-task)
+[![kandi X-Ray](https://kandi.openweaver.com/badges/xray.svg)](https://kandi.openweaver.com/javascript/yatskevich/grunt-bower-task)
 
 > Install Bower packages. Smartly.
 
